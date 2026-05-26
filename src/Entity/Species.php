@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SpeciesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SpeciesRepository::class)]
@@ -23,6 +24,9 @@ class Species
      */
     #[ORM\OneToMany(targetEntity: Animal::class, mappedBy: 'species')]
     private Collection $animals;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
 
     public function __construct()
     {
@@ -72,6 +76,18 @@ class Species
                 $animal->setSpecies(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }

@@ -33,9 +33,16 @@ class Shelter
     #[ORM\OneToMany(targetEntity: Animal::class, mappedBy: 'shelter')]
     private Collection $animals;
 
+    /**
+     * @var Collection<int, Caretaker>
+     */
+    #[ORM\ManyToMany(targetEntity: Caretaker::class, mappedBy: 'shelter')]
+    private Collection $caretakers;
+
     public function __construct()
     {
         $this->animals = new ArrayCollection();
+        $this->caretakers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -116,6 +123,33 @@ class Shelter
             if ($animal->getShelter() === $this) {
                 $animal->setShelter(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Caretaker>
+     */
+    public function getCaretakers(): Collection
+    {
+        return $this->caretakers;
+    }
+
+    public function addCaretaker(Caretaker $caretaker): static
+    {
+        if (!$this->caretakers->contains($caretaker)) {
+            $this->caretakers->add($caretaker);
+            $caretaker->addShelter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCaretaker(Caretaker $caretaker): static
+    {
+        if ($this->caretakers->removeElement($caretaker)) {
+            $caretaker->removeShelter($this);
         }
 
         return $this;

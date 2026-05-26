@@ -30,9 +30,16 @@ class Caretaker
     #[ORM\ManyToMany(targetEntity: Animal::class, mappedBy: 'caretaker')]
     private Collection $animals;
 
+    /**
+     * @var Collection<int, Shelter>
+     */
+    #[ORM\ManyToMany(targetEntity: Shelter::class, inversedBy: 'caretakers')]
+    private Collection $shelter;
+
     public function __construct()
     {
         $this->animals = new ArrayCollection();
+        $this->shelter = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -99,6 +106,30 @@ class Caretaker
         if ($this->animals->removeElement($animal)) {
             $animal->removeCaretaker($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Shelter>
+     */
+    public function getShelter(): Collection
+    {
+        return $this->shelter;
+    }
+
+    public function addShelter(Shelter $shelter): static
+    {
+        if (!$this->shelter->contains($shelter)) {
+            $this->shelter->add($shelter);
+        }
+
+        return $this;
+    }
+
+    public function removeShelter(Shelter $shelter): static
+    {
+        $this->shelter->removeElement($shelter);
 
         return $this;
     }

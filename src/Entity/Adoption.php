@@ -23,6 +23,14 @@ class Adoption
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $notes = null;
 
+    #[ORM\ManyToOne(inversedBy: 'adoptions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Animal $animal = null;
+
+    #[ORM\ManyToOne(inversedBy: 'adoptions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Adopter $adopter = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +68,30 @@ class Adoption
     public function setNotes(?string $notes): static
     {
         $this->notes = $notes;
+
+        return $this;
+    }
+
+    public function getAnimal(): ?Animal
+    {
+        return $this->animal;
+    }
+
+    public function setAnimal(?Animal $animal): static
+    {
+        $this->animal = $animal;
+
+        return $this;
+    }
+
+    public function getAdopter(): ?Adopter
+    {
+        return $this->adopter;
+    }
+
+    public function setAdopter(?Adopter $adopter): static
+    {
+        $this->adopter = $adopter;
 
         return $this;
     }

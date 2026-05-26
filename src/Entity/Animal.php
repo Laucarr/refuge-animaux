@@ -38,9 +38,16 @@ class Animal
     #[ORM\JoinColumn(nullable: false)]
     private ?Species $species = null;
 
+    /**
+     * @var Collection<int, Adoption>
+     */
+    #[ORM\OneToMany(targetEntity: Adoption::class, mappedBy: 'animal', orphanRemoval: true)]
+    private Collection $adoptions;
+
     public function __construct()
     {
         $this->caretaker = new ArrayCollection();
+        $this->adoptions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -128,6 +135,36 @@ class Animal
     public function setSpecies(?Species $species): static
     {
         $this->species = $species;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Adoption>
+     */
+    public function getAdoptions(): Collection
+    {
+        return $this->adoptions;
+    }
+
+    public function addAdoption(Adoption $adoption): static
+    {
+        if (!$this->adoptions->contains($adoption)) {
+            $this->adoptions->add($adoption);
+            $adoption->setAnimal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdoption(Adoption $adoption): static
+    {
+        if ($this->adoptions->removeElement($adoption)) {
+            // set the owning side to null (unless already changed)
+            if ($adoption->getAnimal() === $this) {
+                $adoption->setAnimal(null);
+            }
+        }
 
         return $this;
     }

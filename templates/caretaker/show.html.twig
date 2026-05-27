@@ -1,10 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Caretaker
-{% endblock %}
+{% block title %}Soignant{% endblock %}
 
 {% block body %}
-	<h1>Caretaker</h1>
+	<h1>Soignant</h1>
 
 	<table class="table">
 		<tbody>
@@ -13,11 +12,11 @@
 				<td>{{ caretaker.id }}</td>
 			</tr>
 			<tr>
-				<th>FirstName</th>
+				<th>Prénom</th>
 				<td>{{ caretaker.firstName }}</td>
 			</tr>
 			<tr>
-				<th>LastName</th>
+				<th>Nom</th>
 				<td>{{ caretaker.lastName }}</td>
 			</tr>
 			<tr>
@@ -25,23 +24,23 @@
 				<td>{{ caretaker.email }}</td>
 			</tr>
 			<tr>
-				<th>Phone</th>
+				<th>Téléphone</th>
 				<td>{{ caretaker.phone }}</td>
 			</tr>
 			<tr>
-				<th>WorkDays</th>
+				<th>Jours de travail</th>
 				<td>{{ caretaker.workDays ? caretaker.workDays|json_encode : '' }}</td>
 			</tr>
 			<tr>
-				<th>StartTime</th>
-				<td>{{ caretaker.startTime ? caretaker.startTime|date('H:i:s') : '' }}</td>
+				<th>Heure de début</th>
+				<td>{{ caretaker.startTime ? caretaker.startTime|date('H:i') : '' }}</td>
 			</tr>
 			<tr>
-				<th>EndTime</th>
-				<td>{{ caretaker.endTime ? caretaker.endTime|date('H:i:s') : '' }}</td>
+				<th>Heure de fin</th>
+				<td>{{ caretaker.endTime ? caretaker.endTime|date('H:i') : '' }}</td>
 			</tr>
 			<tr>
-				<th>Animals</th>
+				<th>Animaux</th>
 				<td>
 					<ul>
 						{% for animal in caretaker.animals %}
@@ -51,10 +50,10 @@
 				</td>
 			</tr>
 			<tr>
-				<th>Shelters</th>
+				<th>Refuges</th>
 				<td>
 					<ul>
-						{% for shelter in caretaker.shelters %}
+						{% for shelter in caretaker.shelter %}
 							<li>{{ shelter.name }}</li>
 						{% endfor %}
 					</ul>
@@ -63,9 +62,9 @@
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_caretaker_index') }}">back to list</a>
+	<a href="{{ path('app_caretaker_index') }}">Retour à la liste</a>
 
-	<a href="{{ path('app_caretaker_edit', {'id': caretaker.id}) }}">edit</a>
+	<a href="{{ path('app_caretaker_edit', {'id': caretaker.id}) }}">Modifier</a>
 
 	{{ include('caretaker/_delete_form.html.twig') }}
 {% endblock %}

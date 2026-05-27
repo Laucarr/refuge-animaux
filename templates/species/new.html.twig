@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Species{% endblock %}
+{% block title %}New Species
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Species</h1>
+	<h1>Ajouter une nouvelle espèce</h1>
 
-    {{ include('species/_form.html.twig') }}
+	{{ include('species/_form.html.twig') }}
 
-    <a href="{{ path('app_species_index') }}">back to list</a>
+	<a href="{{ path('app_species_index') }}">Retour à la liste</a>
 {% endblock %}

@@ -1,22 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Shelter index
-{% endblock %}
+{% block title %}Liste des refuges{% endblock %}
 
 {% block body %}
-	<h1>Shelter index</h1>
+	<h1>Liste des refuges</h1>
 
 	<table class="table">
 		<thead>
 			<tr>
 				<th>Id</th>
-				<th>Name</th>
-				<th>Address</th>
-				<th>Phone</th>
+				<th>Nom</th>
+				<th>Adresse</th>
+				<th>Téléphone</th>
 				<th>Email</th>
-				<th>Capacity</th>
-				<th>Caretakers</th>
-				<th>actions</th>
+				<th>Capacité</th>
+				<th>Soignants</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -36,17 +35,17 @@
 						</ul>
 					</td>
 					<td>
-						<a href="{{ path('app_shelter_show', {'id': shelter.id}) }}">show</a>
-						<a href="{{ path('app_shelter_edit', {'id': shelter.id}) }}">edit</a>
+						<a href="{{ path('app_shelter_show', {'id': shelter.id}) }}">Voir</a>
+						<a href="{{ path('app_shelter_edit', {'id': shelter.id}) }}">Modifier</a>
 					</td>
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="7">no records found</td>
+					<td colspan="8">Aucun enregistrement trouvé</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_shelter_new') }}">Create new</a>
+	<a href="{{ path('app_shelter_new') }}">Créer</a>
 {% endblock %}

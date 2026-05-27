@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Animal
-{% endblock %}
+{% block title %}Animal{% endblock %}
 
 {% block body %}
 	<h1>Animal</h1>
@@ -13,19 +12,19 @@
 				<td>{{ animal.id }}</td>
 			</tr>
 			<tr>
-				<th>Name</th>
+				<th>Nom</th>
 				<td>{{ animal.name }}</td>
 			</tr>
 			<tr>
-				<th>Age</th>
+				<th>Âge</th>
 				<td>{{ animal.age }}</td>
 			</tr>
 			<tr>
-				<th>Species</th>
+				<th>Espèce</th>
 				<td>{{ animal.species.name }}</td>
 			</tr>
 			<tr>
-				<th>Status</th>
+				<th>Statut</th>
 				<td>{{ animal.status }}</td>
 			</tr>
 			<tr>
@@ -33,11 +32,11 @@
 				<td>{{ animal.description }}</td>
 			</tr>
 			<tr>
-				<th>Shelter</th>
+				<th>Refuge</th>
 				<td>{{ animal.shelter.name }}</td>
 			</tr>
 			<tr>
-				<th>Caretakers</th>
+				<th>Soignants</th>
 				<td>
 					<ul>
 						{% for caretaker in animal.caretaker %}
@@ -50,9 +49,9 @@
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_animal_index') }}">back to list</a>
+	<a href="{{ path('app_animal_index') }}">Retour à la liste</a>
 
-	<a href="{{ path('app_animal_edit', {'id': animal.id}) }}">edit</a>
+	<a href="{{ path('app_animal_edit', {'id': animal.id}) }}">Modifier</a>
 
 	{{ include('animal/_delete_form.html.twig') }}
 {% endblock %}

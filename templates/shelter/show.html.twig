@@ -1,10 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Shelter
-{% endblock %}
+{% block title %}Refuge{% endblock %}
 
 {% block body %}
-	<h1>Shelter</h1>
+	<h1>Refuge</h1>
 
 	<table class="table">
 		<tbody>
@@ -13,15 +12,15 @@
 				<td>{{ shelter.id }}</td>
 			</tr>
 			<tr>
-				<th>Name</th>
+				<th>Nom</th>
 				<td>{{ shelter.name }}</td>
 			</tr>
 			<tr>
-				<th>Address</th>
+				<th>Adresse</th>
 				<td>{{ shelter.address }}</td>
 			</tr>
 			<tr>
-				<th>Phone</th>
+				<th>Téléphone</th>
 				<td>{{ shelter.phone }}</td>
 			</tr>
 			<tr>
@@ -29,11 +28,11 @@
 				<td>{{ shelter.email }}</td>
 			</tr>
 			<tr>
-				<th>Capacity</th>
+				<th>Capacité</th>
 				<td>{{ shelter.capacity }}</td>
 			</tr>
 			<tr>
-				<th>Caretakers</th>
+				<th>Soignants</th>
 				<td>
 					<ul>
 						{% for caretaker in shelter.caretakers %}
@@ -43,5 +42,11 @@
 				</td>
 			</tr>
 		</tbody>
-	</td>
-</tr></tbody></table><a href="{{ path('app_shelter_index') }}">back to list</a><a href="{{ path('app_shelter_edit', {'id': shelter.id}) }}">edit</a>{{ include('shelter/_delete_form.html.twig') }}{% endblock %}
+	</table>
+
+	<a href="{{ path('app_shelter_index') }}">Retour à la liste</a>
+
+	<a href="{{ path('app_shelter_edit', {'id': shelter.id}) }}">Modifier</a>
+
+	{{ include('shelter/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Adopter index{% endblock %}
+{% block title %}Liste des adoptants{% endblock %}
 
 {% block body %}
-    <h1>Adopter index</h1>
+    <h1>Liste des adoptants</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>FirstName</th>
-                <th>LastName</th>
+                <th>Prénom</th>
+                <th>Nom</th>
                 <th>Email</th>
-                <th>Phone</th>
-                <th>Address</th>
-                <th>actions</th>
+                <th>Téléphone</th>
+                <th>Adresse</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -27,17 +27,17 @@
                 <td>{{ adopter.phone }}</td>
                 <td>{{ adopter.address }}</td>
                 <td>
-                    <a href="{{ path('app_adopter_show', {'id': adopter.id}) }}">show</a>
-                    <a href="{{ path('app_adopter_edit', {'id': adopter.id}) }}">edit</a>
+                    <a href="{{ path('app_adopter_show', {'id': adopter.id}) }}">Voir</a>
+                    <a href="{{ path('app_adopter_edit', {'id': adopter.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">Aucun enregistrement trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_adopter_new') }}">Create new</a>
+    <a href="{{ path('app_adopter_new') }}">Créer</a>
 {% endblock %}

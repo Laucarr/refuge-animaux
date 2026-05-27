@@ -1,25 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Caretaker index
-{% endblock %}
+{% block title %}Liste des soignants{% endblock %}
 
 {% block body %}
-	<h1>Caretaker index</h1>
+	<h1>Liste des soignants</h1>
 
 	<table class="table">
 		<thead>
 			<tr>
 				<th>Id</th>
-				<th>FirstName</th>
-				<th>LastName</th>
+				<th>Prénom</th>
+				<th>Nom</th>
 				<th>Email</th>
-				<th>Phone</th>
-				<th>WorkDays</th>
-				<th>StartTime</th>
-				<th>EndTime</th>
+				<th>Téléphone</th>
+				<th>Jours de travail</th>
+				<th>Heure de début</th>
+				<th>Heure de fin</th>
 				<th>Animaux</th>
-				<th>Shelters</th>
-				<th>actions</th>
+				<th>Refuges</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -31,8 +30,8 @@
 					<td>{{ caretaker.email }}</td>
 					<td>{{ caretaker.phone }}</td>
 					<td>{{ caretaker.workDays ? caretaker.workDays|json_encode : '' }}</td>
-					<td>{{ caretaker.startTime ? caretaker.startTime|date('H:i:s') : '' }}</td>
-					<td>{{ caretaker.endTime ? caretaker.endTime|date('H:i:s') : '' }}</td>
+					<td>{{ caretaker.startTime ? caretaker.startTime|date('H:i') : '' }}</td>
+					<td>{{ caretaker.endTime ? caretaker.endTime|date('H:i') : '' }}</td>
 					<td>
 						<ul>
 							{% for animal in caretaker.animals %}
@@ -42,23 +41,23 @@
 					</td>
 					<td>
 						<ul>
-							{% for shelter in caretaker.shelters %}
+							{% for shelter in caretaker.shelter %}
 								<li>{{ shelter.name }}</li>
 							{% endfor %}
 						</ul>
 					</td>
 					<td>
-						<a href="{{ path('app_caretaker_show', {'id': caretaker.id}) }}">show</a>
-						<a href="{{ path('app_caretaker_edit', {'id': caretaker.id}) }}">edit</a>
+						<a href="{{ path('app_caretaker_show', {'id': caretaker.id}) }}">Voir</a>
+						<a href="{{ path('app_caretaker_edit', {'id': caretaker.id}) }}">Modifier</a>
 					</td>
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="11">no records found</td>
+					<td colspan="11">Aucun enregistrement trouvé</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_caretaker_new') }}">Create new</a>
+	<a href="{{ path('app_caretaker_new') }}">Créer</a>
 {% endblock %}

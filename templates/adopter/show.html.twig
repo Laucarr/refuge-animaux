@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Adopter{% endblock %}
+{% block title %}Adoptant{% endblock %}
 
 {% block body %}
-    <h1>Adopter</h1>
+    <h1>Adoptant</h1>
 
     <table class="table">
         <tbody>
@@ -12,11 +12,11 @@
                 <td>{{ adopter.id }}</td>
             </tr>
             <tr>
-                <th>FirstName</th>
+                <th>Prénom</th>
                 <td>{{ adopter.firstName }}</td>
             </tr>
             <tr>
-                <th>LastName</th>
+                <th>Nom</th>
                 <td>{{ adopter.lastName }}</td>
             </tr>
             <tr>
@@ -24,19 +24,19 @@
                 <td>{{ adopter.email }}</td>
             </tr>
             <tr>
-                <th>Phone</th>
+                <th>Téléphone</th>
                 <td>{{ adopter.phone }}</td>
             </tr>
             <tr>
-                <th>Address</th>
+                <th>Adresse</th>
                 <td>{{ adopter.address }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_adopter_index') }}">back to list</a>
+    <a href="{{ path('app_adopter_index') }}">Retour à la liste</a>
 
-    <a href="{{ path('app_adopter_edit', {'id': adopter.id}) }}">edit</a>
+    <a href="{{ path('app_adopter_edit', {'id': adopter.id}) }}">Modifier</a>
 
     {{ include('adopter/_delete_form.html.twig') }}
 {% endblock %}

@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Shelter{% endblock %}
+{% block title %}Nouveau refuge{% endblock %}
 
 {% block body %}
-    <h1>Create new Shelter</h1>
+    <h1>Créer un nouveau refuge</h1>
 
     {{ include('shelter/_form.html.twig') }}
 
-    <a href="{{ path('app_shelter_index') }}">back to list</a>
+    <a href="{{ path('app_shelter_index') }}">Retour à la liste</a>
 {% endblock %}

@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Caretaker{% endblock %}
+{% block title %}Modifier le soignant{% endblock %}
 
 {% block body %}
-    <h1>Edit Caretaker</h1>
+    <h1>Modifier le soignant</h1>
 
-    {{ include('caretaker/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('caretaker/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('app_caretaker_index') }}">back to list</a>
+    <a href="{{ path('app_caretaker_index') }}">Retour à la liste</a>
 
     {{ include('caretaker/_delete_form.html.twig') }}
 {% endblock %}

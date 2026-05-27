@@ -1,35 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Species index{% endblock %}
+{% block title %}Liste des espèces{% endblock %}
 
 {% block body %}
-    <h1>Species index</h1>
+	<h1>Liste des espèces</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for species in species %}
-            <tr>
-                <td>{{ species.id }}</td>
-                <td>{{ species.name }}</td>
-                <td>
-                    <a href="{{ path('app_species_show', {'id': species.id}) }}">show</a>
-                    <a href="{{ path('app_species_edit', {'id': species.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nom</th>
+				<th>Description</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for species in species %}
+				<tr>
+					<td>{{ species.id }}</td>
+					<td>{{ species.name }}</td>
+					<td>{{ species.description }}</td>
+					<td>
+						<a href="{{ path('app_species_show', {'id': species.id}) }}">Voir</a>
+						<a href="{{ path('app_species_edit', {'id': species.id}) }}">Modifier</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">Aucun enregistrement trouvé</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_species_new') }}">Create new</a>
+	<a href="{{ path('app_species_new') }}">Créer</a>
 {% endblock %}

@@ -1,20 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AnimalController!{% endblock %}
+{% block title %}Animal index
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<h1>Animal index</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Status</th>
+				<th>Description</th>
+				<th>Shelter</th>
+				<th>Caretakers</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for animal in animals %}
+				<tr>
+					<td>{{ animal.id }}</td>
+					<td>{{ animal.name }}</td>
+					<td>{{ animal.age }}</td>
+					<td>{{ animal.status }}</td>
+					<td>{{ animal.description }}</td>
+					<td>{{ animal.shelter.name }}</td>
+					<td>
+						<ul>
+							{% for caretaker in animal.caretaker %}
+								<li>{{ caretaker.lastName }}</li>
+							{% endfor %}
+						</ul>
+					</td>
+					<td>
+						<a href="{{ path('app_animal_show', {'id': animal.id}) }}">show</a>
+						<a href="{{ path('app_animal_edit', {'id': animal.id}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="8">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/laura/Desktop/CREA/2_annee/Backend/Symfony/ex/refuge_animaux/src/Controller/AnimalController.php</code></li>
-        <li>Your template at <code>/Users/laura/Desktop/CREA/2_annee/Backend/Symfony/ex/refuge_animaux/templates/animal/index.html.twig</code></li>
-    </ul>
-</div>
+	<a href="{{ path('app_animal_new') }}">Create new</a>
 {% endblock %}

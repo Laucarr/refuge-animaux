@@ -1,20 +1,64 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CaretakerController!{% endblock %}
+{% block title %}Caretaker index
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<h1>Caretaker index</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>FirstName</th>
+				<th>LastName</th>
+				<th>Email</th>
+				<th>Phone</th>
+				<th>WorkDays</th>
+				<th>StartTime</th>
+				<th>EndTime</th>
+				<th>Animaux</th>
+				<th>Shelters</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for caretaker in caretakers %}
+				<tr>
+					<td>{{ caretaker.id }}</td>
+					<td>{{ caretaker.firstName }}</td>
+					<td>{{ caretaker.lastName }}</td>
+					<td>{{ caretaker.email }}</td>
+					<td>{{ caretaker.phone }}</td>
+					<td>{{ caretaker.workDays ? caretaker.workDays|json_encode : '' }}</td>
+					<td>{{ caretaker.startTime ? caretaker.startTime|date('H:i:s') : '' }}</td>
+					<td>{{ caretaker.endTime ? caretaker.endTime|date('H:i:s') : '' }}</td>
+					<td>
+						<ul>
+							{% for animal in caretaker.animals %}
+								<li>{{ animal.name }}</li>
+							{% endfor %}
+						</ul>
+					</td>
+					<td>
+						<ul>
+							{% for shelter in caretaker.shelters %}
+								<li>{{ shelter.name }}</li>
+							{% endfor %}
+						</ul>
+					</td>
+					<td>
+						<a href="{{ path('app_caretaker_show', {'id': caretaker.id}) }}">show</a>
+						<a href="{{ path('app_caretaker_edit', {'id': caretaker.id}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="11">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/laura/Desktop/CREA/2_annee/Backend/Symfony/ex/refuge_animaux/src/Controller/CaretakerController.php</code></li>
-        <li>Your template at <code>/Users/laura/Desktop/CREA/2_annee/Backend/Symfony/ex/refuge_animaux/templates/caretaker/index.html.twig</code></li>
-    </ul>
-</div>
+	<a href="{{ path('app_caretaker_new') }}">Create new</a>
 {% endblock %}

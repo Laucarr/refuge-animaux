@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CaretakerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CaretakerRepository::class)]
@@ -23,6 +24,18 @@ class Caretaker
 
     #[ORM\Column(length: 50)]
     private ?string $email = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $phone = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?array $workDays = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?\DateTime $startTime = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?\DateTime $endTime = null;
 
     /**
      * @var Collection<int, Animal>
@@ -79,6 +92,54 @@ class Caretaker
     public function setEmail(string $email): static
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): static
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getWorkDays(): ?array
+    {
+        return $this->workDays;
+    }
+
+    public function setWorkDays(?array $workDays): static
+    {
+        $this->workDays = $workDays;
+
+        return $this;
+    }
+
+    public function getStartTime(): ?\DateTime
+    {
+        return $this->startTime;
+    }
+
+    public function setStartTime(?\DateTime $startTime): static
+    {
+        $this->startTime = $startTime;
+
+        return $this;
+    }
+
+    public function getEndTime(): ?\DateTime
+    {
+        return $this->endTime;
+    }
+
+    public function setEndTime(?\DateTime $endTime): static
+    {
+        $this->endTime = $endTime;
 
         return $this;
     }

@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Caretaker
+{% endblock %}
+
+{% block body %}
+	<h1>Caretaker</h1>
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ caretaker.id }}</td>
+			</tr>
+			<tr>
+				<th>FirstName</th>
+				<td>{{ caretaker.firstName }}</td>
+			</tr>
+			<tr>
+				<th>LastName</th>
+				<td>{{ caretaker.lastName }}</td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td>{{ caretaker.email }}</td>
+			</tr>
+			<tr>
+				<th>Phone</th>
+				<td>{{ caretaker.phone }}</td>
+			</tr>
+			<tr>
+				<th>WorkDays</th>
+				<td>{{ caretaker.workDays ? caretaker.workDays|json_encode : '' }}</td>
+			</tr>
+			<tr>
+				<th>StartTime</th>
+				<td>{{ caretaker.startTime ? caretaker.startTime|date('H:i:s') : '' }}</td>
+			</tr>
+			<tr>
+				<th>EndTime</th>
+				<td>{{ caretaker.endTime ? caretaker.endTime|date('H:i:s') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Animals</th>
+				<td>
+					<ul>
+						{% for animal in caretaker.animals %}
+							<li>{{ animal.name }}</li>
+						{% endfor %}
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<th>Shelters</th>
+				<td>
+					<ul>
+						{% for shelter in caretaker.shelters %}
+							<li>{{ shelter.name }}</li>
+						{% endfor %}
+					</ul>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_caretaker_index') }}">back to list</a>
+
+	<a href="{{ path('app_caretaker_edit', {'id': caretaker.id}) }}">edit</a>
+
+	{{ include('caretaker/_delete_form.html.twig') }}
+{% endblock %}

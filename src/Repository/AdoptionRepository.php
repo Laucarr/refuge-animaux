@@ -16,6 +16,34 @@ class AdoptionRepository extends ServiceEntityRepository
         parent::__construct($registry, Adoption::class);
     }
 
+    public function findByFilters(string $status = '', int $adopterId = 0, int $animalId = 0, int $shelterId = 0): array
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        if ($status !== '') {
+            $qb->andWhere('a.status = :status')
+            ->setParameter('status', $status);
+        }
+
+        if ($adopterId !== 0) {
+            $qb->andWhere('a.adopter = :adopterId')
+            ->setParameter('adopterId', $adopterId);
+        }
+
+        if ($animalId !== 0) {
+            $qb->andWhere('a.animal = :animalId')
+            ->setParameter('animalId', $animalId);
+        }
+
+        if ($shelterId !== 0) {
+            $qb->join('a.animal', 'animal')
+            ->andWhere('animal.shelter = :shelterId')
+            ->setParameter('shelterId', $shelterId);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Adoption[] Returns an array of Adoption objects
 //     */

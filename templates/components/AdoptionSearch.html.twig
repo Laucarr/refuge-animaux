@@ -1,0 +1,86 @@
+<div
+	{{ attributes }}>
+	{# Filtres #}
+	<div class="row mb-3">
+		<div class="col">
+			<select class="form-select" data-model="status">
+				<option value="">Tous les statuts</option>
+				<option value="finalisée">Finalisée</option>
+				<option value="en cours">En cours</option>
+				<option value="annulée">Annulée</option>
+				<option value="en attente">En attente</option>
+			</select>
+		</div>
+		<div class="col">
+			<select class="form-select" data-model="adopterId">
+				<option value="0">Tous les adoptants</option>
+				{% for adopter in this.adopters %}
+					<option value="{{ adopter.id }}">{{ adopter.firstName }}
+						{{ adopter.lastName }}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<div class="col">
+			<select class="form-select" data-model="animalId">
+				<option value="0">Tous les animaux</option>
+				{% for animal in this.animals %}
+					<option value="{{ animal.id }}">{{ animal.name }}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<div class="col">
+			<select class="form-select" data-model="shelterId">
+				<option value="0">Tous les refuges</option>
+				{% for shelter in this.shelters %}
+					<option value="{{ shelter.id }}">{{ shelter.name }}</option>
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+
+	{# Tableau #}
+	<div class="card shadow-sm">
+		<div class="card-body p-0">
+			<div class="table-responsive">
+				<table class="table table-striped table-hover align-middle mb-0">
+					<thead class="table-dark">
+						<tr>
+							<th>Id</th>
+							<th>Date</th>
+							<th>Statut</th>
+							<th>Adoptant</th>
+							<th>Animal</th>
+							<th>Refuge</th>
+							<th>Notes</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for adoption in this.adoptions %}
+							<tr>
+								<td>{{ adoption.id }}</td>
+								<td>{{ adoption.date ? adoption.date|date('d/m/Y') : '' }}</td>
+								<td>
+									<span class="badge bg-secondary">{{ adoption.status }}</span>
+								</td>
+								<td>{{ adoption.adopter.firstName }}
+									{{ adoption.adopter.lastName }}</td>
+								<td>{{ adoption.animal.name }}</td>
+								<td>{{ adoption.animal.shelter.name }}</td>
+								<td>{{ adoption.notes }}</td>
+								<td class="text-nowrap">
+									<a href="{{ path('app_adoption_show', {'id': adoption.id}) }}" class="btn btn-sm btn-outline-primary">Voir</a>
+									<a href="{{ path('app_adoption_edit', {'id': adoption.id}) }}" class="btn btn-sm btn-outline-warning">Modifier</a>
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="8" class="text-center text-muted py-4">Aucun enregistrement trouvé</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Adopter{% endblock %}
+
+{% block body %}
+    <h1>Adopter</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ adopter.id }}</td>
+            </tr>
+            <tr>
+                <th>FirstName</th>
+                <td>{{ adopter.firstName }}</td>
+            </tr>
+            <tr>
+                <th>LastName</th>
+                <td>{{ adopter.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ adopter.email }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ adopter.phone }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>{{ adopter.address }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_adopter_index') }}">back to list</a>
+
+    <a href="{{ path('app_adopter_edit', {'id': adopter.id}) }}">edit</a>
+
+    {{ include('adopter/_delete_form.html.twig') }}
+{% endblock %}

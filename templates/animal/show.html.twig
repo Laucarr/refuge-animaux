@@ -1,57 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Animal{% endblock %}
+{% block title %}Animal
+{% endblock %}
 
 {% block body %}
-	<h1>Animal</h1>
+	<div class="row justify-content-center">
+		<div class="col-lg-8">
+			<div class="card shadow-sm">
+				<div class="card-header bg-light">
+					<h1 class="mb-0 fw-bold">Animal</h1>
+				</div>
+				<div class="card-body">
+					<dl class="row mb-0">
+						<dt class="col-sm-4 text-muted">Id</dt>
+						<dd class="col-sm-8">{{ animal.id }}</dd>
 
-	<table class="table">
-		<tbody>
-			<tr>
-				<th>Id</th>
-				<td>{{ animal.id }}</td>
-			</tr>
-			<tr>
-				<th>Nom</th>
-				<td>{{ animal.name }}</td>
-			</tr>
-			<tr>
-				<th>Âge</th>
-				<td>{{ animal.age }}</td>
-			</tr>
-			<tr>
-				<th>Espèce</th>
-				<td>{{ animal.species.name }}</td>
-			</tr>
-			<tr>
-				<th>Statut</th>
-				<td>{{ animal.status }}</td>
-			</tr>
-			<tr>
-				<th>Description</th>
-				<td>{{ animal.description }}</td>
-			</tr>
-			<tr>
-				<th>Refuge</th>
-				<td>{{ animal.shelter.name }}</td>
-			</tr>
-			<tr>
-				<th>Soignants</th>
-				<td>
-					<ul>
-						{% for caretaker in animal.caretaker %}
-							<li>{{ caretaker.firstName }}
-								{{ caretaker.lastName }}</li>
-						{% endfor %}
-					</ul>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+						<dt class="col-sm-4 text-muted">Nom</dt>
+						<dd class="col-sm-8">{{ animal.name }}</dd>
 
-	<a href="{{ path('app_animal_index') }}">Retour à la liste</a>
+						<dt class="col-sm-4 text-muted">Âge</dt>
+						<dd class="col-sm-8">{{ animal.age }}</dd>
 
-	<a href="{{ path('app_animal_edit', {'id': animal.id}) }}">Modifier</a>
+						<dt class="col-sm-4 text-muted">Espèce</dt>
+						<dd class="col-sm-8">{{ animal.species.name }}</dd>
 
-	{{ include('animal/_delete_form.html.twig') }}
+						<dt class="col-sm-4 text-muted">Statut</dt>
+						<dd class="col-sm-8">
+							<span class="badge bg-secondary">{{ animal.status }}</span>
+						</dd>
+
+						<dt class="col-sm-4 text-muted">Description</dt>
+						<dd class="col-sm-8">{{ animal.description }}</dd>
+
+						<dt class="col-sm-4 text-muted">Refuge</dt>
+						<dd class="col-sm-8">{{ animal.shelter.name }}</dd>
+
+						<dt class="col-sm-4 text-muted">Soignants</dt>
+						<dd class="col-sm-8 mb-0">
+							{% for caretaker in animal.caretaker %}
+								<span class="badge bg-light text-dark border">{{ caretaker.firstName }}
+									{{ caretaker.lastName }}</span>
+							{% else %}
+								<span class="text-muted">—</span>
+							{% endfor %}
+						</dd>
+					</dl>
+				</div>
+				<div class="card-footer d-flex justify-content-between align-items-center">
+					<a href="{{ path('app_animal_index') }}" class="btn btn-outline-secondary">← Retour à la liste</a>
+					<div class="d-flex gap-2">
+						<a href="{{ path('app_animal_edit', {'id': animal.id}) }}" class="btn btn-warning">Modifier</a>
+						{{ include('animal/_delete_form.html.twig') }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

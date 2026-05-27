@@ -1,12 +1,30 @@
-<header>
-	<nav>
-		<ul>
-			<li><a href="/animal">Animaux</a></li>
-			<li><a href="/shelter">Refuge</a></li>
-			<li><a href="/caretaker">Soignant</a></li>
-			<li><a href="/species">Espèce</a></li>
-			<li><a href="/adopter">Adoptants</a></li>
-			<li><a href="/adoption">Adoptions</a></li>
-		</ul>
-	</nav>
-</header>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+	<div class="container">
+		<a class="navbar-brand fw-bold" href="/">🐾 Refuge pour animaux</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Ouvrir la navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarMain">
+			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a class="nav-link {{ app.request.pathInfo starts with '/animal' ? 'active' : '' }}" href="{{ path('app_animal_index') }}">Animaux</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link {{ app.request.pathInfo starts with '/shelter' ? 'active' : '' }}" href="{{ path('app_shelter_index') }}">Refuges</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link {{ app.request.pathInfo starts with '/caretaker' ? 'active' : '' }}" href="{{ path('app_caretaker_index') }}">Soignants</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link {{ app.request.pathInfo starts with '/species' ? 'active' : '' }}" href="{{ path('app_species_index') }}">Espèces</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link {{ app.request.pathInfo starts with '/adopter' ? 'active' : '' }}" href="{{ path('app_adopter_index') }}">Adoptants</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link {{ app.request.pathInfo starts with '/adoption' ? 'active' : '' }}" href="{{ path('app_adoption_index') }}">Adoptions</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>

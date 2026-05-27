@@ -1,13 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier l'adoptant{% endblock %}
+{% block title %}Modifier l'adoptant
+{% endblock %}
 
 {% block body %}
-    <h1>Modifier l'adoptant</h1>
-
-    {{ include('adopter/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
-
-    <a href="{{ path('app_adopter_index') }}">Retour à la liste</a>
-
-    {{ include('adopter/_delete_form.html.twig') }}
+	<div class="row justify-content-center">
+		<div class="col-lg-7 col-xl-6">
+			<div class="card shadow-sm">
+				<div class="card-header bg-light">
+					<h1 class="mb-0 fw-bold">Modifier l'adoptant</h1>
+				</div>
+				<div class="card-body">
+					{{ include('adopter/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+				</div>
+			</div>
+			<div class="mt-3 d-flex justify-content-between">
+				<a href="{{ path('app_adopter_index') }}" class="btn btn-outline-secondary">← Retour à la liste</a>
+				{{ include('adopter/_delete_form.html.twig') }}
+			</div>
+		</div>
+	</div>
 {% endblock %}

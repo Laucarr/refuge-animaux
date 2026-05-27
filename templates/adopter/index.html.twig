@@ -3,41 +3,48 @@
 {% block title %}Liste des adoptants{% endblock %}
 
 {% block body %}
-    <h1>Liste des adoptants</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Liste des adoptants</h1>
+        <a href="{{ path('app_adopter_new') }}" class="btn btn-success">+ Créer</a>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Email</th>
-                <th>Téléphone</th>
-                <th>Adresse</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for adopter in adopters %}
-            <tr>
-                <td>{{ adopter.id }}</td>
-                <td>{{ adopter.firstName }}</td>
-                <td>{{ adopter.lastName }}</td>
-                <td>{{ adopter.email }}</td>
-                <td>{{ adopter.phone }}</td>
-                <td>{{ adopter.address }}</td>
-                <td>
-                    <a href="{{ path('app_adopter_show', {'id': adopter.id}) }}">Voir</a>
-                    <a href="{{ path('app_adopter_edit', {'id': adopter.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">Aucun enregistrement trouvé</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_adopter_new') }}">Créer</a>
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Id</th>
+                            <th>Prénom</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
+                            <th>Adresse</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for adopter in adopters %}
+                            <tr>
+                                <td>{{ adopter.id }}</td>
+                                <td>{{ adopter.firstName }}</td>
+                                <td>{{ adopter.lastName }}</td>
+                                <td>{{ adopter.email }}</td>
+                                <td>{{ adopter.phone }}</td>
+                                <td>{{ adopter.address }}</td>
+                                <td class="text-nowrap">
+                                    <a href="{{ path('app_adopter_show', {'id': adopter.id}) }}" class="btn btn-sm btn-outline-primary">Voir</a>
+                                    <a href="{{ path('app_adopter_edit', {'id': adopter.id}) }}" class="btn btn-sm btn-outline-warning">Modifier</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="text-center text-muted py-4">Aucun enregistrement trouvé</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}

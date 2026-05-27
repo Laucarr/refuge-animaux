@@ -3,44 +3,50 @@
 {% block title %}Liste des adoptions{% endblock %}
 
 {% block body %}
-	<h1>Liste des adoptions</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Liste des adoptions</h1>
+        <a href="{{ path('app_adoption_new') }}" class="btn btn-success">+ Créer</a>
+    </div>
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>Date</th>
-				<th>Statut</th>
-				<th>Adoptant</th>
-				<th>Animal</th>
-				<th>Refuge</th>
-				<th>Notes</th>
-				<th>Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for adoption in adoptions %}
-				<tr>
-					<td>{{ adoption.id }}</td>
-					<td>{{ adoption.date ? adoption.date|date('Y-m-d') : '' }}</td>
-					<td>{{ adoption.status }}</td>
-					<td>{{ adoption.adopter.firstname }}
-						{{ adoption.adopter.lastName }}</td>
-					<td>{{ adoption.animal.name }}</td>
-					<td>{{ adoption.animal.shelter.name }}</td>
-					<td>{{ adoption.notes }}</td>
-					<td>
-						<a href="{{ path('app_adoption_show', {'id': adoption.id}) }}">Voir</a>
-						<a href="{{ path('app_adoption_edit', {'id': adoption.id}) }}">Modifier</a>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="8">Aucun enregistrement trouvé</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-
-	<a href="{{ path('app_adoption_new') }}">Créer</a>
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Id</th>
+                            <th>Date</th>
+                            <th>Statut</th>
+                            <th>Adoptant</th>
+                            <th>Animal</th>
+                            <th>Refuge</th>
+                            <th>Notes</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for adoption in adoptions %}
+                            <tr>
+                                <td>{{ adoption.id }}</td>
+                                <td>{{ adoption.date ? adoption.date|date('d/m/Y') : '' }}</td>
+                                <td><span class="badge bg-secondary">{{ adoption.status }}</span></td>
+                                <td>{{ adoption.adopter.firstname }} {{ adoption.adopter.lastName }}</td>
+                                <td>{{ adoption.animal.name }}</td>
+                                <td>{{ adoption.animal.shelter.name }}</td>
+                                <td>{{ adoption.notes }}</td>
+                                <td class="text-nowrap">
+                                    <a href="{{ path('app_adoption_show', {'id': adoption.id}) }}" class="btn btn-sm btn-outline-primary">Voir</a>
+                                    <a href="{{ path('app_adoption_edit', {'id': adoption.id}) }}" class="btn btn-sm btn-outline-warning">Modifier</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="8" class="text-center text-muted py-4">Aucun enregistrement trouvé</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}

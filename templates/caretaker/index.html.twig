@@ -3,61 +3,64 @@
 {% block title %}Liste des soignants{% endblock %}
 
 {% block body %}
-	<h1>Liste des soignants</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Liste des soignants</h1>
+        <a href="{{ path('app_caretaker_new') }}" class="btn btn-success">+ Créer</a>
+    </div>
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>Prénom</th>
-				<th>Nom</th>
-				<th>Email</th>
-				<th>Téléphone</th>
-				<th>Jours de travail</th>
-				<th>Heure de début</th>
-				<th>Heure de fin</th>
-				<th>Animaux</th>
-				<th>Refuges</th>
-				<th>Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for caretaker in caretakers %}
-				<tr>
-					<td>{{ caretaker.id }}</td>
-					<td>{{ caretaker.firstName }}</td>
-					<td>{{ caretaker.lastName }}</td>
-					<td>{{ caretaker.email }}</td>
-					<td>{{ caretaker.phone }}</td>
-					<td>{{ caretaker.workDays ? caretaker.workDays|json_encode : '' }}</td>
-					<td>{{ caretaker.startTime ? caretaker.startTime|date('H:i') : '' }}</td>
-					<td>{{ caretaker.endTime ? caretaker.endTime|date('H:i') : '' }}</td>
-					<td>
-						<ul>
-							{% for animal in caretaker.animals %}
-								<li>{{ animal.name }}</li>
-							{% endfor %}
-						</ul>
-					</td>
-					<td>
-						<ul>
-							{% for shelter in caretaker.shelter %}
-								<li>{{ shelter.name }}</li>
-							{% endfor %}
-						</ul>
-					</td>
-					<td>
-						<a href="{{ path('app_caretaker_show', {'id': caretaker.id}) }}">Voir</a>
-						<a href="{{ path('app_caretaker_edit', {'id': caretaker.id}) }}">Modifier</a>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="11">Aucun enregistrement trouvé</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-
-	<a href="{{ path('app_caretaker_new') }}">Créer</a>
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Id</th>
+                            <th>Prénom</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
+                            <th>Jours de travail</th>
+                            <th>Heure de début</th>
+                            <th>Heure de fin</th>
+                            <th>Animaux</th>
+                            <th>Refuges</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for caretaker in caretakers %}
+                            <tr>
+                                <td>{{ caretaker.id }}</td>
+                                <td>{{ caretaker.firstName }}</td>
+                                <td>{{ caretaker.lastName }}</td>
+                                <td>{{ caretaker.email }}</td>
+                                <td>{{ caretaker.phone }}</td>
+                                <td>{{ caretaker.workDays ? caretaker.workDays|json_encode : '' }}</td>
+                                <td>{{ caretaker.startTime ? caretaker.startTime|date('H:i') : '' }}</td>
+                                <td>{{ caretaker.endTime ? caretaker.endTime|date('H:i') : '' }}</td>
+                                <td>
+                                    {% for animal in caretaker.animals %}
+                                        <span class="badge bg-light text-dark border">{{ animal.name }}</span>
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {% for shelter in caretaker.shelter %}
+                                        <span class="badge bg-light text-dark border">{{ shelter.name }}</span>
+                                    {% endfor %}
+                                </td>
+                                <td class="text-nowrap">
+                                    <a href="{{ path('app_caretaker_show', {'id': caretaker.id}) }}" class="btn btn-sm btn-outline-primary">Voir</a>
+                                    <a href="{{ path('app_caretaker_edit', {'id': caretaker.id}) }}" class="btn btn-sm btn-outline-warning">Modifier</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="11" class="text-center text-muted py-4">Aucun enregistrement trouvé</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}

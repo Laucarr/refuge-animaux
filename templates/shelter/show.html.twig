@@ -1,52 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Refuge{% endblock %}
+{% block title %}Refuge
+{% endblock %}
 
 {% block body %}
-	<h1>Refuge</h1>
+	<div class="row justify-content-center">
+		<div class="col-lg-8">
+			<div class="card shadow-sm">
+				<div class="card-header bg-light">
+					<h1 class="mb-0 fw-bold">Refuge</h1>
+				</div>
+				<div class="card-body">
+					<dl class="row mb-0">
+						<dt class="col-sm-4 text-muted">Id</dt>
+						<dd class="col-sm-8">{{ shelter.id }}</dd>
 
-	<table class="table">
-		<tbody>
-			<tr>
-				<th>Id</th>
-				<td>{{ shelter.id }}</td>
-			</tr>
-			<tr>
-				<th>Nom</th>
-				<td>{{ shelter.name }}</td>
-			</tr>
-			<tr>
-				<th>Adresse</th>
-				<td>{{ shelter.address }}</td>
-			</tr>
-			<tr>
-				<th>Téléphone</th>
-				<td>{{ shelter.phone }}</td>
-			</tr>
-			<tr>
-				<th>Email</th>
-				<td>{{ shelter.email }}</td>
-			</tr>
-			<tr>
-				<th>Capacité</th>
-				<td>{{ shelter.capacity }}</td>
-			</tr>
-			<tr>
-				<th>Soignants</th>
-				<td>
-					<ul>
-						{% for caretaker in shelter.caretakers %}
-							<li>{{ caretaker.lastName }}</li>
-						{% endfor %}
-					</ul>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+						<dt class="col-sm-4 text-muted">Nom</dt>
+						<dd class="col-sm-8">{{ shelter.name }}</dd>
 
-	<a href="{{ path('app_shelter_index') }}">Retour à la liste</a>
+						<dt class="col-sm-4 text-muted">Adresse</dt>
+						<dd class="col-sm-8">{{ shelter.address }}</dd>
 
-	<a href="{{ path('app_shelter_edit', {'id': shelter.id}) }}">Modifier</a>
+						<dt class="col-sm-4 text-muted">Téléphone</dt>
+						<dd class="col-sm-8">{{ shelter.phone }}</dd>
 
-	{{ include('shelter/_delete_form.html.twig') }}
+						<dt class="col-sm-4 text-muted">Email</dt>
+						<dd class="col-sm-8">{{ shelter.email }}</dd>
+
+						<dt class="col-sm-4 text-muted">Capacité</dt>
+						<dd class="col-sm-8">{{ shelter.capacity }}</dd>
+
+						<dt class="col-sm-4 text-muted">Soignants</dt>
+						<dd class="col-sm-8 mb-0">
+							{% for caretaker in shelter.caretakers %}
+								<span class="badge bg-light text-dark border">{{ caretaker.lastName }}</span>
+							{% else %}
+								<span class="text-muted">—</span>
+							{% endfor %}
+						</dd>
+					</dl>
+				</div>
+				<div class="card-footer d-flex justify-content-between align-items-center">
+					<a href="{{ path('app_shelter_index') }}" class="btn btn-outline-secondary">← Retour à la liste</a>
+					<div class="d-flex gap-2">
+						<a href="{{ path('app_shelter_edit', {'id': shelter.id}) }}" class="btn btn-warning">Modifier</a>
+						{{ include('shelter/_delete_form.html.twig') }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

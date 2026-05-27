@@ -1,47 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Adoption{% endblock %}
+{% block title %}Adoption
+{% endblock %}
 
 {% block body %}
-	<h1>Adoption</h1>
+	<div class="row justify-content-center">
+		<div class="col-lg-8">
+			<div class="card shadow-sm">
+				<div class="card-header bg-light">
+					<h1 class="mb-0 fw-bold">Adoption</h1>
+				</div>
+				<div class="card-body">
+					<dl class="row mb-0">
+						<dt class="col-sm-4 text-muted">Id</dt>
+						<dd class="col-sm-8">{{ adoption.id }}</dd>
 
-	<table class="table">
-		<tbody>
-			<tr>
-				<th>Id</th>
-				<td>{{ adoption.id }}</td>
-			</tr>
-			<tr>
-				<th>Date</th>
-				<td>{{ adoption.date ? adoption.date|date('Y-m-d') : '' }}</td>
-			</tr>
-			<tr>
-				<th>Statut</th>
-				<td>{{ adoption.status }}</td>
-			</tr>
-			<tr>
-				<th>Adoptant</th>
-				<td>{{ adoption.adopter.firstName }}
-					{{ adoption.adopter.lastName }}</td>
-			</tr>
-			<tr>
-				<th>Animal</th>
-				<td>{{ adoption.animal.name }}</td>
-			</tr>
-			<tr>
-				<th>Refuge</th>
-				<td>{{ adoption.animal.shelter.name }}</td>
-			</tr>
-			<tr>
-				<th>Notes</th>
-				<td>{{ adoption.notes }}</td>
-			</tr>
-		</tbody>
-	</table>
+						<dt class="col-sm-4 text-muted">Date</dt>
+						<dd class="col-sm-8">{{ adoption.date ? adoption.date|date('d/m/Y') : '' }}</dd>
 
-	<a href="{{ path('app_adoption_index') }}">Retour à la liste</a>
+						<dt class="col-sm-4 text-muted">Statut</dt>
+						<dd class="col-sm-8">
+							<span class="badge bg-secondary">{{ adoption.status }}</span>
+						</dd>
 
-	<a href="{{ path('app_adoption_edit', {'id': adoption.id}) }}">Modifier</a>
+						<dt class="col-sm-4 text-muted">Adoptant</dt>
+						<dd class="col-sm-8">{{ adoption.adopter.firstName }}
+							{{ adoption.adopter.lastName }}</dd>
 
-	{{ include('adoption/_delete_form.html.twig') }}
+						<dt class="col-sm-4 text-muted">Animal</dt>
+						<dd class="col-sm-8">{{ adoption.animal.name }}</dd>
+
+						<dt class="col-sm-4 text-muted">Refuge</dt>
+						<dd class="col-sm-8">{{ adoption.animal.shelter.name }}</dd>
+
+						<dt class="col-sm-4 text-muted">Notes</dt>
+						<dd class="col-sm-8 mb-0">{{ adoption.notes }}</dd>
+					</dl>
+				</div>
+				<div class="card-footer d-flex justify-content-between align-items-center">
+					<a href="{{ path('app_adoption_index') }}" class="btn btn-outline-secondary">← Retour à la liste</a>
+					<div class="d-flex gap-2">
+						<a href="{{ path('app_adoption_edit', {'id': adoption.id}) }}" class="btn btn-warning">Modifier</a>
+						{{ include('adoption/_delete_form.html.twig') }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

@@ -21,6 +21,10 @@
 				<td>{{ animal.age }}</td>
 			</tr>
 			<tr>
+				<th>Species</th>
+				<td>{{ animal.species.name }}</td>
+			</tr>
+			<tr>
 				<th>Status</th>
 				<td>{{ animal.status }}</td>
 			</tr>
@@ -37,7 +41,8 @@
 				<td>
 					<ul>
 						{% for caretaker in animal.caretaker %}
-							<li>{{ caretaker.lastName }}</li>
+							<li>{{ caretaker.firstName }}
+								{{ caretaker.lastName }}</li>
 						{% endfor %}
 					</ul>
 				</td>

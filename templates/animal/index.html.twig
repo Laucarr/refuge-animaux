@@ -12,6 +12,7 @@
 				<th>Id</th>
 				<th>Name</th>
 				<th>Age</th>
+				<th>Species</th>
 				<th>Status</th>
 				<th>Description</th>
 				<th>Shelter</th>
@@ -25,13 +26,15 @@
 					<td>{{ animal.id }}</td>
 					<td>{{ animal.name }}</td>
 					<td>{{ animal.age }}</td>
+					<td>{{ animal.species.name }}</td>
 					<td>{{ animal.status }}</td>
 					<td>{{ animal.description }}</td>
 					<td>{{ animal.shelter.name }}</td>
 					<td>
 						<ul>
 							{% for caretaker in animal.caretaker %}
-								<li>{{ caretaker.lastName }}</li>
+								<li>{{ caretaker.firstName }}
+									{{ caretaker.lastName }}</li>
 							{% endfor %}
 						</ul>
 					</td>
@@ -42,7 +45,7 @@
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="8">no records found</td>
+					<td colspan="9">no records found</td>
 				</tr>
 			{% endfor %}
 		</tbody>

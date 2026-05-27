@@ -25,6 +25,33 @@ class AnimalRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findByFilters(string $status = '', string $name = '', int $speciesId = 0, int $shelterId = 0): array
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        if ($status !== '') {
+            $qb->andWhere('a.status = :status')
+            ->setParameter('status', $status);
+        }
+
+        if ($name !== '') {
+            $qb->andWhere('a.name LIKE :name')
+            ->setParameter('name', '%' . $name . '%');
+        }
+
+        if ($speciesId !== 0) {
+            $qb->andWhere('a.species = :speciesId')
+            ->setParameter('speciesId', $speciesId);
+        }
+
+        if ($shelterId !== 0) {
+            $qb->andWhere('a.shelter = :shelterId')
+            ->setParameter('shelterId', $shelterId);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Animal[] Returns an array of Animal objects
 //     */

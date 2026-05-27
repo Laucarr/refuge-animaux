@@ -22,15 +22,16 @@
 			</tr>
 			<tr>
 				<th>Adopter</th>
-				<td>{{ adoption.adopter }}</td>
+				<td>{{ adoption.adopter.firstName }}
+					{{ adoption.adopter.lastName }}</td>
 			</tr>
 			<tr>
 				<th>Animal</th>
-				<td>{{ adoption.animal }}</td>
+				<td>{{ adoption.animal.name }}</td>
 			</tr>
 			<tr>
 				<th>Shelter</th>
-				<td>{{ adoption.animal.shelter }}</td>
+				<td>{{ adoption.animal.shelter.name }}</td>
 			</tr>
 			<tr>
 				<th>Notes</th>

@@ -25,9 +25,10 @@
 					<td>{{ adoption.id }}</td>
 					<td>{{ adoption.date ? adoption.date|date('Y-m-d') : '' }}</td>
 					<td>{{ adoption.status }}</td>
-					<td>{{ adoption.adopter }}</td>
-					<td>{{ adoption.animal }}</td>
-					<td>{{ adoption.animal.shelter }}</td>
+					<td>{{ adoption.adopter.firstname }}
+						{{ adoption.adopter.lastName }}</td>
+					<td>{{ adoption.animal.name }}</td>
+					<td>{{ adoption.animal.shelter.name }}</td>
 					<td>{{ adoption.notes }}</td>
 					<td>
 						<a href="{{ path('app_adoption_show', {'id': adoption.id}) }}">show</a>

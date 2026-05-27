@@ -6,6 +6,9 @@ use App\Entity\Caretaker;
 use App\Entity\Shelter;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,15 +26,15 @@ class ShelterType extends AbstractType
                 'label' => 'Adresse',
                 'required' => true
             ])
-            ->add('phone', TextType::class, [
+            ->add('phone', TelType::class, [
                 'label' => 'Téléphone',
                 'required' => false
             ])
-            ->add('email', TextType::class, [
+            ->add('email', EmailType::class, [
                 'label' => 'Email',
                 'required' => true
             ])
-            ->add('capacity', TextType::class, [
+            ->add('capacity', IntegerType::class, [
                 'label' => 'Capacité',
                 'required' => false
             ])

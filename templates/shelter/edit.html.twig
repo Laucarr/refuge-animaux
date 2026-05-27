@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Shelter{% endblock %}
+
+{% block body %}
+    <h1>Edit Shelter</h1>
+
+    {{ include('shelter/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_shelter_index') }}">back to list</a>
+
+    {{ include('shelter/_delete_form.html.twig') }}
+{% endblock %}

@@ -39,6 +39,9 @@ class Shelter
     #[ORM\ManyToMany(targetEntity: Caretaker::class, mappedBy: 'shelter')]
     private Collection $caretakers;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $capacity = null;
+
     public function __construct()
     {
         $this->animals = new ArrayCollection();
@@ -94,6 +97,18 @@ class Shelter
     public function setEmail(string $email): static
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getCapacity(): ?int
+    {
+        return $this->capacity;
+    }
+
+    public function setCapacity(?int $capacity): static
+    {
+        $this->capacity = $capacity;
 
         return $this;
     }

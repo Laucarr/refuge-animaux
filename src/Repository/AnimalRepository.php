@@ -16,6 +16,15 @@ class AnimalRepository extends ServiceEntityRepository
         parent::__construct($registry, Animal::class);
     }
 
+    public function findAvailable(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.status = :status')
+            ->setParameter('status', 'disponible')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Animal[] Returns an array of Animal objects
 //     */

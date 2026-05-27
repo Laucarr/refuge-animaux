@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Adoption
+{% endblock %}
+
+{% block body %}
+	<h1>Adoption</h1>
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ adoption.id }}</td>
+			</tr>
+			<tr>
+				<th>Date</th>
+				<td>{{ adoption.date ? adoption.date|date('Y-m-d') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Status</th>
+				<td>{{ adoption.status }}</td>
+			</tr>
+			<tr>
+				<th>Adopter</th>
+				<td>{{ adoption.adopter }}</td>
+			</tr>
+			<tr>
+				<th>Animal</th>
+				<td>{{ adoption.animal }}</td>
+			</tr>
+			<tr>
+				<th>Shelter</th>
+				<td>{{ adoption.animal.shelter }}</td>
+			</tr>
+			<tr>
+				<th>Notes</th>
+				<td>{{ adoption.notes }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_adoption_index') }}">back to list</a>
+
+	<a href="{{ path('app_adoption_edit', {'id': adoption.id}) }}">edit</a>
+
+	{{ include('adoption/_delete_form.html.twig') }}
+{% endblock %}

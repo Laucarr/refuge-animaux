@@ -1,20 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdoptionController!{% endblock %}
+{% block title %}Adoption index
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<h1>Adoption index</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Date</th>
+				<th>Status</th>
+				<th>Adopter</th>
+				<th>Animal</th>
+				<th>Shelter</th>
+				<th>Notes</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for adoption in adoptions %}
+				<tr>
+					<td>{{ adoption.id }}</td>
+					<td>{{ adoption.date ? adoption.date|date('Y-m-d') : '' }}</td>
+					<td>{{ adoption.status }}</td>
+					<td>{{ adoption.adopter }}</td>
+					<td>{{ adoption.animal }}</td>
+					<td>{{ adoption.animal.shelter }}</td>
+					<td>{{ adoption.notes }}</td>
+					<td>
+						<a href="{{ path('app_adoption_show', {'id': adoption.id}) }}">show</a>
+						<a href="{{ path('app_adoption_edit', {'id': adoption.id}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="8">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/laura/Desktop/CREA/2_annee/Backend/Symfony/ex/refuge_animaux/src/Controller/AdoptionController.php</code></li>
-        <li>Your template at <code>/Users/laura/Desktop/CREA/2_annee/Backend/Symfony/ex/refuge_animaux/templates/adoption/index.html.twig</code></li>
-    </ul>
-</div>
+	<a href="{{ path('app_adoption_new') }}">Create new</a>
 {% endblock %}

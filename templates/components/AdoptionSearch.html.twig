@@ -63,10 +63,22 @@
 								<td>
 									<span class="badge bg-secondary">{{ adoption.status }}</span>
 								</td>
-								<td>{{ adoption.adopter.firstName }}
-									{{ adoption.adopter.lastName }}</td>
-								<td>{{ adoption.animal.name }}</td>
-								<td>{{ adoption.animal.shelter.name }}</td>
+								<td>
+									<a href="{{ path('app_adopter_show', {'id': adoption.adopter.id}) }}" class="badge bg-light text-dark border text-decoration-none">
+										{{ adoption.adopter.firstName }}
+										{{ adoption.adopter.lastName }}
+									</a>
+								</td>
+								<td>
+									<a href="{{ path('app_animal_show', {'id': adoption.animal.id}) }}" class="badge bg-light text-dark border text-decoration-none">
+										{{ adoption.animal.name }}
+									</a>
+								</td>
+								<td>
+									<a href="{{ path('app_shelter_show', {'id': adoption.animal.shelter.id}) }}">
+										{{ adoption.animal.shelter.name }}
+									</a>
+								</td>
 								<td>{{ adoption.notes }}</td>
 								<td class="text-nowrap">
 									<a href="{{ path('app_adoption_show', {'id': adoption.id}) }}" class="btn btn-sm btn-outline-primary">Voir</a>

@@ -59,11 +59,17 @@
 									<span class="badge bg-secondary">{{ animal.status }}</span>
 								</td>
 								<td>{{ animal.description }}</td>
-								<td>{{ animal.shelter.name }}</td>
+								<td>
+									<a href="{{ path('app_shelter_show', {'id': animal.shelter.id}) }}">
+										{{ animal.shelter.name }}
+									</a>
+								</td>
 								<td>
 									{% for caretaker in animal.caretaker %}
-										<span class="badge bg-light text-dark border">{{ caretaker.firstName }}
-											{{ caretaker.lastName }}</span>
+										<a href="{{ path('app_caretaker_show', {'id': caretaker.id}) }}" class="badge bg-light text-dark border text-decoration-none">
+											{{ caretaker.firstName }}
+											{{ caretaker.lastName }}
+										</a>
 									{% endfor %}
 								</td>
 								<td class="text-nowrap">

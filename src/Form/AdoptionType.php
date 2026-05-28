@@ -8,6 +8,7 @@ use App\Entity\Animal;
 use App\Repository\AnimalRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,7 +28,15 @@ class AdoptionType extends AbstractType
                 'widget'   => 'single_text',
                 'required' => true,
             ])
-            ->add('status')
+            ->add('status', ChoiceType::class, [
+                'label'   => 'Statut',
+                'choices' => [
+                    'En attente' => 'en attente',
+                    'En cours'   => 'en cours',
+                    'Finalisée'  => 'finalisée',
+                    'Annulée'    => 'annulée',
+                ],
+            ])
             ->add('notes', TextareaType::class, [
                 'label' => 'Notes',
                 'required' => false,

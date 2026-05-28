@@ -33,7 +33,21 @@
 						<dt class="col-sm-4 text-muted">Soignants</dt>
 						<dd class="col-sm-8 mb-0">
 							{% for caretaker in shelter.caretakers %}
-								<span class="badge bg-light text-dark border">{{ caretaker.lastName }}</span>
+								<a href="{{ path('app_caretaker_show', {'id': caretaker.id}) }}" class="badge bg-light text-dark border text-decoration-none">
+									{{ caretaker.firstName }}
+									{{ caretaker.lastName }}
+								</a>
+							{% else %}
+								<span class="text-muted">—</span>
+							{% endfor %}
+						</dd>
+
+						<dt class="col-sm-4 text-muted">Animaux</dt>
+						<dd class="col-sm-8 mb-0">
+							{% for animal in shelter.animals %}
+								<a href="{{ path('app_animal_show', {'id': animal.id}) }}" class="badge bg-light text-dark border text-decoration-none">
+									{{ animal.name }}
+								</a>
 							{% else %}
 								<span class="text-muted">—</span>
 							{% endfor %}

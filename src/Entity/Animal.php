@@ -23,7 +23,7 @@ class Animal
     private ?int $age = null;
 
     #[ORM\Column(length: 20)]
-    private ?string $status = null;
+    private ?string $status = 'disponible';
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;

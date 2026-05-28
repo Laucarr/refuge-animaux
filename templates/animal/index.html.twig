@@ -8,5 +8,5 @@
 		<h1 class="h3 mb-0">Liste des animaux</h1>
 		<a href="{{ path('app_animal_new') }}" class="btn btn-success">+ Créer</a>
 	</div>
-	{{ component('AnimalSearch') }}
+	{{ component('AnimalSearch', { 'userShelterIds': shelterIds }) }}
 {% endblock %}

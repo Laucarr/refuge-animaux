@@ -36,9 +36,20 @@ class AnimalRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByFilters(string $status = '', string $name = '', int $speciesId = 0, int $shelterId = 0): array
-    {
+public function findByFilters(
+        string $status = '',
+        string $name = '',
+        int $speciesId = 0,
+        int $shelterId = 0,
+        array $shelterIds = []
+    ): array {
         $qb = $this->createQueryBuilder('a');
+
+        // Restreindre aux shelters de l'user
+        if (!empty($shelterIds)) {
+            $qb->andWhere('a.shelter IN (:shelterIds)')
+            ->setParameter('shelterIds', $shelterIds);
+        }
 
         if ($status !== '') {
             $qb->andWhere('a.status = :status')

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Animal;
 use App\Form\AnimalType;
-use App\Repository\AnimalRepository;
+use App\Interface\ShelterManagerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,11 +14,15 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/animal')]
 final class AnimalController extends AbstractController
 {
+    public function __construct(private ShelterManagerInterface $shelterManager)
+    {
+    }
+
     #[Route(name: 'app_animal_index', methods: ['GET'])]
-    public function index(AnimalRepository $animalRepository): Response
+    public function index(): Response
     {
         return $this->render('animal/index.html.twig', [
-            'animals' => $animalRepository->findAll(),
+            'shelterIds' => $this->shelterManager->getUserShelterIds($this->getUser()),
         ]);
     }
 
@@ -26,7 +30,9 @@ final class AnimalController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $animal = new Animal();
-        $form = $this->createForm(AnimalType::class, $animal);
+        $form = $this->createForm(AnimalType::class, $animal, [
+            'shelters' => $this->shelterManager->getUserShelters($this->getUser()),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -53,18 +59,19 @@ final class AnimalController extends AbstractController
     #[Route('/{id}/edit', name: 'app_animal_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Animal $animal, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(AnimalType::class, $animal);
+        $form = $this->createForm(AnimalType::class, $animal, [
+            'shelters' => $this->shelterManager->getUserShelters($this->getUser()),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
             return $this->redirectToRoute('app_animal_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('animal/edit.html.twig', [
             'animal' => $animal,
-            'form' => $form,
+            'form'   => $form,
         ]);
     }
 

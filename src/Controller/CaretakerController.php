@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Caretaker;
+use App\Entity\Shelter;
 use App\Form\CaretakerType;
 use App\Repository\CaretakerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -68,6 +70,20 @@ final class CaretakerController extends AbstractController
         ]);
     }
 
+    #[Route('/shelter/{id}/caretakers', name: 'api_shelter_caretakers', methods: ['GET'])]
+    public function getCaretakersByShelter(Shelter $shelter): JsonResponse
+    {
+        $data = $shelter->getCaretakers()->map(function(Caretaker $c) {
+            return [
+                'id'        => $c->getId(),
+                'firstName' => $c->getFirstName(),
+                'lastName'  => $c->getLastName(),
+            ];
+        })->toArray();
+
+        return $this->json($data);
+    }
+
     #[Route('/{id}', name: 'app_caretaker_delete', methods: ['POST'])]
     public function delete(Request $request, Caretaker $caretaker, EntityManagerInterface $entityManager): Response
     {
@@ -78,4 +94,5 @@ final class CaretakerController extends AbstractController
 
         return $this->redirectToRoute('app_caretaker_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }

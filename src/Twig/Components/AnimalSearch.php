@@ -26,7 +26,10 @@ class AnimalSearch
     #[LiveProp(writable: true)]
     public int $shelterId = 0;
 
-    public function __construct(private AnimalRepository $animalRepository, private SpeciesRepository $speciesRepository, private ShelterRepository $shelterRepository,)
+    #[LiveProp(writable: false)]
+    public array $userShelterIds = [];
+
+    public function __construct(private AnimalRepository $animalRepository, private SpeciesRepository $speciesRepository, private ShelterRepository $shelterRepository)
     {
     }
 
@@ -37,6 +40,7 @@ class AnimalSearch
             $this->name,
             $this->speciesId,
             $this->shelterId,
+            $this->userShelterIds
         );
     }
 
@@ -47,6 +51,6 @@ class AnimalSearch
 
     public function getShelters(): array
     {
-        return $this->shelterRepository->findAll();
+        return $this->shelterRepository->findBy(['id' => $this->userShelterIds]);
     }
 }

@@ -48,6 +48,7 @@ class AnimalType extends AbstractType
                 'class' => Shelter::class,
                 'choice_label' => 'name',
                 'required' => true,
+                'choices' => $options['shelters'],
                 'attr' => ['id' => 'animal_shelter'],
             ])
             ->add('caretaker', EntityType::class, [
@@ -65,6 +66,7 @@ class AnimalType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Animal::class,
+            'shelters'         => [],
         ]);
     }
 }

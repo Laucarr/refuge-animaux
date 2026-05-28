@@ -1,6 +1,53 @@
 {{ form_start(form) }}
-{{ form_widget(form) }}
+{{ form_row(form.name) }}
+{{ form_row(form.age) }}
+{{ form_row(form.description) }}
+{{ form_row(form.species) }}
+{{ form_row(form.shelter) }}
+{{ form_row(form.caretaker) }}
 <div class="d-grid mt-3">
 	<button class="btn btn-primary">{{ button_label|default('Sauvegarder') }}</button>
 </div>
 {{ form_end(form) }}
+
+{# Récupérer les IDs des caretakers déjà assignés #}
+{% set selectedCaretakerIds = [] %}
+{% for caretaker in form.caretaker.vars.data %}
+	{% set selectedCaretakerIds = selectedCaretakerIds|merge([caretaker.id]) %}
+{% endfor %}
+
+<script>
+	document.addEventListener('turbo:load', function () {
+const shelterSelect = document.querySelector('#animal_shelter');
+const caretakerSelect = document.querySelector('#animal_caretaker');
+const selectedCaretakerIds = {{ selectedCaretakerIds|json_encode }};
+
+function loadCaretakers(shelterId) {
+if (! shelterId) {
+caretakerSelect.innerHTML = '';
+return;
+}
+fetch(`/caretaker/shelter/${shelterId}/caretakers`).then(r => r.json()).then(caretakers => {
+caretakerSelect.innerHTML = '';
+caretakers.forEach(c => {
+const option = document.createElement('option');
+option.value = c.id;
+option.textContent = c.firstName + ' ' + c.lastName;
+// Présélectionner si déjà assigné
+if (selectedCaretakerIds.includes(c.id)) {
+option.selected = true;
+}
+caretakerSelect.appendChild(option);
+});
+});
+}
+
+if (shelterSelect.value) {
+loadCaretakers(shelterSelect.value);
+} else {
+caretakerSelect.innerHTML = '';
+} shelterSelect.addEventListener('change', function () {
+loadCaretakers(this.value);
+});
+});
+</script>

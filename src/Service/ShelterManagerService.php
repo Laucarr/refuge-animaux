@@ -18,6 +18,18 @@ class ShelterManagerService implements ShelterManagerInterface
         return $animals;
     }
 
+    public function getUserShelters(User $user): array
+    {
+        return $user->getShelters()->toArray();
+    }
+
+    public function getUserShelterIds(User $user): array
+    {
+        return $user->getShelters()
+            ->map(fn($s) => $s->getId())
+            ->toArray();
+    }
+
     public function getAdoptionsByUser(User $user): array
     {
         $adoptions = [];

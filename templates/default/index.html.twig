@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue au Refuge
+{% endblock %}
+
+{% block body %}
+	{# Présentation #}
+	<div class="py-5 text-center bg-light rounded mb-5">
+		<h1 class="display-5 fw-bold">🐾 Refuge des Animaux</h1>
+		<p class="lead col-md-8 mx-auto">
+			Bienvenue sur notre plateforme d'adoption. Nous accueillons des animaux de toutes espèces et cherchons pour chacun d'eux une famille aimante. Parcourez nos pensionnaires disponibles et donnez-leur une seconde chance !
+		</p>
+		<a href="{{ path('app_adoption_new') }}" class="btn btn-success btn-lg mt-2">
+			Adopter un animal
+		</a>
+	</div>
+
+	{# Animaux disponibles #}
+	<h2 class="mb-4">Animaux disponibles à l'adoption</h2>
+
+	<div class="row row-cols-1 row-cols-md-3 g-4">
+		{% for animal in animals %}
+			<div class="col">
+				<div class="card h-100 shadow-sm">
+					<div class="card-body">
+						<h5 class="card-title">{{ animal.name }}</h5>
+						<p class="card-text text-muted mb-1">
+							<small>{{ animal.species.name }}</small>
+						</p>
+						<p class="card-text text-muted mb-2">
+							<small>{{ animal.age }}
+								ans —
+								{{ animal.shelter.name }}</small>
+						</p>
+						<p class="card-text">{{ animal.description|slice(0, 100) }}...</p>
+					</div>
+					<div class="card-footer d-flex justify-content-between align-items-center">
+						<span class="badge bg-success">Disponible</span>
+						<a href="{{ path('app_animal_show', {'id': animal.id}) }}" class="btn btn-sm btn-outline-primary">
+							Voir la fiche
+						</a>
+					</div>
+				</div>
+			</div>
+		{% else %}
+			<p class="text-muted">Aucun animal disponible pour le moment.</p>
+		{% endfor %}
+	</div>
+{% endblock %}

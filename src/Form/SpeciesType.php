@@ -21,7 +21,7 @@ class SpeciesType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
-                'required' => true,
+                'required' => false,
                 'attr' => ['placeholder' => 'Décrivez l\'espèce...', 'rows' => 5]
             ])
         ;

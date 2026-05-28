@@ -1,0 +1,61 @@
+<div {{ attributes }}>
+	<form method="post" action="{{ path('app_contact') }}">
+		<div class="row mb-3">
+			<div class="col">
+				<label class="form-label">Prénom</label>
+				<input type="text" name="firstName" class="form-control" required>
+			</div>
+			<div class="col">
+				<label class="form-label">Nom</label>
+				<input type="text" name="lastName" class="form-control" required>
+			</div>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label">Email</label>
+			<input type="email" name="email" class="form-control" required>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label">Sujet</label>
+			<select name="subject" class="form-select" data-model="subject">
+				{% for label, value in this.subjects %}
+					<option value="{{ value }}" {{ subject == value ? 'selected' : '' }}>
+						{{ label }}
+					</option>
+				{% endfor %}
+			</select>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label">Refuge concerné</label>
+			<select name="shelter" class="form-select" data-model="shelterId">
+				<option value="0">Tous les refuges</option>
+				{% for shelter in this.shelters %}
+					<option value="{{ shelter.id }}" {{ shelterId == shelter.id ? 'selected' : '' }}>
+						{{ shelter.name }}
+					</option>
+				{% endfor %}
+			</select>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label">Animal concerné</label>
+			<select name="animal" class="form-select" data-model="animalId">
+				<option value="0">Sélectionnez un animal</option>
+				{% for animal in this.animals %}
+					<option value="{{ animal.id }}" {{ animalId == animal.id ? 'selected' : '' }}>
+						{{ animal.name }}
+					</option>
+				{% endfor %}
+			</select>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label">Message</label>
+			<textarea name="message" class="form-control" rows="5" required></textarea>
+		</div>
+
+		<button type="submit" class="btn btn-primary">Envoyer</button>
+	</form>
+</div>

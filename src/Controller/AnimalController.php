@@ -5,13 +5,16 @@ namespace App\Controller;
 use App\Entity\Animal;
 use App\Form\AnimalType;
 use App\Interface\ShelterManagerInterface;
+use App\Security\Voter\AnimalVoter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/animal')]
+#[IsGranted('ROLE_USER')]
 final class AnimalController extends AbstractController
 {
     public function __construct(private ShelterManagerInterface $shelterManager)
@@ -49,6 +52,7 @@ final class AnimalController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_animal_show', methods: ['GET'])]
+    #[IsGranted(AnimalVoter::VIEW, subject: 'animal')]
     public function show(Animal $animal): Response
     {
         return $this->render('animal/show.html.twig', [
@@ -57,6 +61,7 @@ final class AnimalController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_animal_edit', methods: ['GET', 'POST'])]
+    #[IsGranted(AnimalVoter::EDIT, subject: 'animal')]
     public function edit(Request $request, Animal $animal, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(AnimalType::class, $animal, [
@@ -76,6 +81,7 @@ final class AnimalController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_animal_delete', methods: ['POST'])]
+    #[IsGranted(AnimalVoter::DELETE, subject: 'animal')]
     public function delete(Request $request, Animal $animal, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$animal->getId(), $request->getPayload()->getString('_token'))) {

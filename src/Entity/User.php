@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -32,6 +34,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    /**
+     * @var Collection<int, Shelter>
+     */
+    #[ORM\ManyToMany(targetEntity: Shelter::class, inversedBy: 'owners')]
+    private Collection $shelters;
+
+    public function __construct()
+    {
+        $this->shelters = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -106,5 +119,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $data["\0".self::class."\0password"] = hash('crc32c', $this->password);
 
         return $data;
+    }
+
+    /**
+     * @return Collection<int, Shelter>
+     */
+    public function getShelters(): Collection
+    {
+        return $this->shelters;
+    }
+
+    public function addShelter(Shelter $shelter): static
+    {
+        if (!$this->shelters->contains($shelter)) {
+            $this->shelters->add($shelter);
+        }
+
+        return $this;
+    }
+
+    public function removeShelter(Shelter $shelter): static
+    {
+        $this->shelters->removeElement($shelter);
+
+        return $this;
     }
 }

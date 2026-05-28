@@ -42,10 +42,17 @@ class Shelter
     #[ORM\Column(nullable: true)]
     private ?int $capacity = null;
 
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'shelters')]
+    private Collection $owners;
+
     public function __construct()
     {
         $this->animals = new ArrayCollection();
         $this->caretakers = new ArrayCollection();
+        $this->owners = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -165,6 +172,33 @@ class Shelter
     {
         if ($this->caretakers->removeElement($caretaker)) {
             $caretaker->removeShelter($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getOwners(): Collection
+    {
+        return $this->owners;
+    }
+
+    public function addOwner(User $owner): static
+    {
+        if (!$this->owners->contains($owner)) {
+            $this->owners->add($owner);
+            $owner->addShelter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOwner(User $owner): static
+    {
+        if ($this->owners->removeElement($owner)) {
+            $owner->removeShelter($this);
         }
 
         return $this;

@@ -57,4 +57,20 @@ class ShelterManagerService implements ShelterManagerInterface
         }
         return $caretakers;
     }
+
+    public function getAdoptersByUser(User $user): array
+    {
+        $adopters = [];
+        foreach ($user->getShelters() as $shelter) {
+            foreach ($shelter->getAnimals() as $animal) {
+                foreach ($animal->getAdoptions() as $adoption) {
+                    $adopter = $adoption->getAdopter();
+                    if (!in_array($adopter, $adopters)) {
+                        $adopters[] = $adopter;
+                    }
+                }
+            }
+        }
+        return $adopters;
+    }
 }

@@ -41,7 +41,7 @@ class ShelterType extends AbstractType
             ->add('caretakers', EntityType::class, [
                 'label' => 'Soigneurs',
                 'class' => Caretaker::class,
-                'choice_label' => 'id',
+                'choice_label' => fn(Caretaker $caretaker) => $caretaker->getFirstName() . ' ' . $caretaker->getLastName(),
                 'multiple' => true,
                 'required' => false
             ])

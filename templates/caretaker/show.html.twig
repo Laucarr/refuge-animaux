@@ -28,7 +28,13 @@
 						<dd class="col-sm-8">{{ caretaker.phone }}</dd>
 
 						<dt class="col-sm-4 text-muted">Jours de travail</dt>
-						<dd class="col-sm-8">{{ caretaker.workDays ? caretaker.workDays|json_encode : '—' }}</dd>
+						<dd class="col-sm-8">
+							{% if caretaker.workDays %}
+								{% for day in caretaker.workDays %}
+									<span class="badge bg-primary">{{ day }}</span>
+								{% endfor %}
+							{% endif %}
+						</dd>
 
 						<dt class="col-sm-4 text-muted">Heure de début</dt>
 						<dd class="col-sm-8">{{ caretaker.startTime ? caretaker.startTime|date('H:i') : '—' }}</dd>
@@ -39,7 +45,9 @@
 						<dt class="col-sm-4 text-muted">Animaux</dt>
 						<dd class="col-sm-8">
 							{% for animal in caretaker.animals %}
-								<span class="badge bg-light text-dark border">{{ animal.name }}</span>
+								<a href="{{ path('app_animal_show', {'id': animal.id}) }}" class="badge bg-light text-dark border text-decoration-none">
+									{{ animal.name }}
+								</a>
 							{% else %}
 								<span class="text-muted">—</span>
 							{% endfor %}
@@ -48,9 +56,9 @@
 						<dt class="col-sm-4 text-muted">Refuges</dt>
 						<dd class="col-sm-8 mb-0">
 							{% for shelter in caretaker.shelter %}
-								<span class="badge bg-light text-dark border">{{ shelter.name }}</span>
-							{% else %}
-								<span class="text-muted">—</span>
+								<a href="{{ path('app_shelter_show', {'id': shelter.id}) }}">
+									{{ shelter.name }}
+								</a>
 							{% endfor %}
 						</dd>
 					</dl>
@@ -58,8 +66,12 @@
 				<div class="card-footer d-flex justify-content-between align-items-center">
 					<a href="{{ path('app_caretaker_index') }}" class="btn btn-outline-secondary">← Retour à la liste</a>
 					<div class="d-flex gap-2">
-						<a href="{{ path('app_caretaker_edit', {'id': caretaker.id}) }}" class="btn btn-warning">Modifier</a>
-						{{ include('caretaker/_delete_form.html.twig') }}
+						{% if is_granted('CARETAKER_EDIT', caretaker) %}
+							<a href="{{ path('app_caretaker_edit', {'id': caretaker.id}) }}" class="btn btn-warning">Modifier</a>
+						{% endif %}
+						{% if is_granted('CARETAKER_DELETE', caretaker) %}
+							{{ include('caretaker/_delete_form.html.twig') }}
+						{% endif %}
 					</div>
 				</div>
 			</div>

@@ -6,7 +6,9 @@
 {% block body %}
 	<div class="d-flex justify-content-between align-items-center mb-4">
 		<h1 class="h3 mb-0">Liste des soignants</h1>
-		<a href="{{ path('app_caretaker_new') }}" class="btn btn-success">+ Créer</a>
+		{% if is_granted('CARETAKER_CREATE') %}
+			<a href="{{ path('app_caretaker_new') }}" class="btn btn-success">+ Créer</a>
+		{% endif %}
 	</div>
 
 	<div class="card shadow-sm">
@@ -15,15 +17,10 @@
 				<table class="table table-striped table-hover align-middle mb-0">
 					<thead class="table-dark">
 						<tr>
-							<th>Id</th>
 							<th>Prénom</th>
 							<th>Nom</th>
 							<th>Email</th>
 							<th>Téléphone</th>
-							<th>Jours de travail</th>
-							<th>Heure de début</th>
-							<th>Heure de fin</th>
-							<th>Animaux</th>
 							<th>Refuges</th>
 							<th>Actions</th>
 						</tr>
@@ -31,27 +28,10 @@
 					<tbody>
 						{% for caretaker in caretakers %}
 							<tr>
-								<td>{{ caretaker.id }}</td>
 								<td>{{ caretaker.firstName }}</td>
 								<td>{{ caretaker.lastName }}</td>
 								<td>{{ caretaker.email }}</td>
 								<td>{{ caretaker.phone }}</td>
-								<td>
-									{% if caretaker.workDays %}
-										{% for day in caretaker.workDays %}
-											<span class="badge bg-primary">{{ day }}</span>
-										{% endfor %}
-									{% endif %}
-								</td>
-								<td>{{ caretaker.startTime ? caretaker.startTime|date('H:i') : '' }}</td>
-								<td>{{ caretaker.endTime ? caretaker.endTime|date('H:i') : '' }}</td>
-								<td>
-									{% for animal in caretaker.animals %}
-										<a href="{{ path('app_animal_show', {'id': animal.id}) }}" class="badge bg-light text-dark border text-decoration-none">
-											{{ animal.name }}
-										</a>
-									{% endfor %}
-								</td>
 								<td>
 									{% for shelter in caretaker.shelter %}
 										<a href="{{ path('app_shelter_show', {'id': shelter.id}) }}">
@@ -60,13 +40,17 @@
 									{% endfor %}
 								</td>
 								<td class="text-nowrap">
-									<a href="{{ path('app_caretaker_show', {'id': caretaker.id}) }}" class="btn btn-sm btn-outline-primary">Voir</a>
-									<a href="{{ path('app_caretaker_edit', {'id': caretaker.id}) }}" class="btn btn-sm btn-outline-warning">Modifier</a>
+									{% if is_granted('CARETAKER_VIEW', caretaker) %}
+										<a href="{{ path('app_caretaker_show', {'id': caretaker.id}) }}" class="btn btn-sm btn-outline-primary">Voir</a>
+									{% endif %}
+									{% if is_granted('CARETAKER_EDIT', caretaker) %}
+										<a href="{{ path('app_caretaker_edit', {'id': caretaker.id}) }}" class="btn btn-sm btn-outline-warning">Modifier</a>
+									{% endif %}
 								</td>
 							</tr>
 						{% else %}
 							<tr>
-								<td colspan="11" class="text-center text-muted py-4">Aucun enregistrement trouvé</td>
+								<td colspan="6" class="text-center text-muted py-4">Aucun enregistrement trouvé</td>
 							</tr>
 						{% endfor %}
 					</tbody>

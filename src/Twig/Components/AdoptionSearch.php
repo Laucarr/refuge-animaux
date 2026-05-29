@@ -27,6 +27,9 @@ class AdoptionSearch
     #[LiveProp(writable: true)]
     public int $shelterId = 0;
 
+    #[LiveProp(writable: false)]
+    public array $userShelterIds = [];
+
     public function __construct(private AdoptionRepository $adoptionRepository, private AnimalRepository $animalRepository, private AdopterRepository $adopterRepository, private ShelterRepository $shelterRepository,)
     {
     }
@@ -38,12 +41,13 @@ class AdoptionSearch
             $this->adopterId,
             $this->animalId,
             $this->shelterId,
+            $this->userShelterIds
         );
     }
 
     public function getAnimals(): array
     {
-        return $this->animalRepository->findAll();
+        return $this->animalRepository->findBy(['shelter' => $this->userShelterIds]);
     }
 
     public function getAdopters(): array
@@ -53,6 +57,6 @@ class AdoptionSearch
 
     public function getShelters(): array
     {
-        return $this->shelterRepository->findAll();
+        return $this->shelterRepository->findBy(['id' => $this->userShelterIds]);
     }
 }

@@ -45,20 +45,17 @@
 				<table class="table table-striped table-hover align-middle mb-0">
 					<thead class="table-dark">
 						<tr>
-							<th>Id</th>
 							<th>Date</th>
 							<th>Statut</th>
 							<th>Adoptant</th>
 							<th>Animal</th>
 							<th>Refuge</th>
-							<th>Notes</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
 						{% for adoption in this.adoptions %}
 							<tr>
-								<td>{{ adoption.id }}</td>
 								<td>{{ adoption.date ? adoption.date|date('d/m/Y') : '' }}</td>
 								<td>
 									<span class="badge bg-secondary">{{ adoption.status }}</span>
@@ -79,15 +76,18 @@
 										{{ adoption.animal.shelter.name }}
 									</a>
 								</td>
-								<td>{{ adoption.notes }}</td>
 								<td class="text-nowrap">
-									<a href="{{ path('app_adoption_show', {'id': adoption.id}) }}" class="btn btn-sm btn-outline-primary">Voir</a>
-									<a href="{{ path('app_adoption_edit', {'id': adoption.id}) }}" class="btn btn-sm btn-outline-warning">Modifier</a>
+									{% if is_granted('ADOPTION_VIEW', adoption) %}
+										<a href="{{ path('app_adoption_show', {'id': adoption.id}) }}" class="btn btn-sm btn-outline-primary">Voir</a>
+									{% endif %}
+									{% if is_granted('ADOPTION_EDIT', adoption) %}
+										<a href="{{ path('app_adoption_edit', {'id': adoption.id}) }}" class="btn btn-sm btn-outline-warning">Modifier</a>
+									{% endif %}
 								</td>
 							</tr>
 						{% else %}
 							<tr>
-								<td colspan="8" class="text-center text-muted py-4">Aucun enregistrement trouvé</td>
+								<td colspan="6" class="text-center text-muted py-4">Aucun enregistrement trouvé</td>
 							</tr>
 						{% endfor %}
 					</tbody>

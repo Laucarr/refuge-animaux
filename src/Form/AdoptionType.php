@@ -45,7 +45,7 @@ class AdoptionType extends AbstractType
             ->add('animal', EntityType::class, [
                 'class' => Animal::class,
                 'choice_label' => 'name',
-                'choices' => $this->animalRepository->findAvailable(),
+                'choices'      => $options['animals'],
                 'required' => true,
             ])
             ->add('adopter', EntityType::class, [
@@ -60,6 +60,7 @@ class AdoptionType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Adoption::class,
+            'animals'    => [],
         ]);
     }
 }

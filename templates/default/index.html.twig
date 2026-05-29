@@ -35,9 +35,6 @@
 						<p class="card-text">{{ animal.description|slice(0, 100) }}...</p>
 					</div>
 					<div class="card-footer d-flex justify-content-between align-items-center">
-						<a href="{{ path('app_animal_show', {'id': animal.id}) }}" class="btn btn-sm btn-outline-primary">
-							Voir la fiche
-						</a>
 						<a href="{{ path('app_contact', { 'subject': 'adoption', 'shelter': animal.shelter.id, 'animal': animal.id }) }}" class="btn btn-sm btn-outline-success">
 							Contacter le refuge
 						</a>
@@ -46,6 +43,39 @@
 			</div>
 		{% else %}
 			<p class="text-muted">Aucun animal disponible pour le moment.</p>
+		{% endfor %}
+	</div>
+	{# Refuges #}
+	<h2 class="mb-4 mt-5">Nos refuges</h2>
+
+	<div class="row row-cols-1 row-cols-md-3 g-4">
+		{% for shelter in shelters %}
+			<div class="col">
+				<div class="card h-100 shadow-sm">
+					<div class="card-body">
+						<h5 class="card-title">{{ shelter.name }}</h5>
+						<p class="card-text text-muted mb-1">
+							<small>📍
+								{{ shelter.address }}</small>
+						</p>
+						<p class="card-text text-muted mb-1">
+							<small>📞
+								{{ shelter.phone }}</small>
+						</p>
+						<p class="card-text text-muted">
+							<small>✉️
+								{{ shelter.email }}</small>
+						</p>
+					</div>
+					<div class="card-footer">
+						<a href="{{ path('app_contact', { 'subject': 'info_refuge', 'shelter': shelter.id }) }}" class="btn btn-sm btn-outline-primary w-100">
+							Contacter ce refuge
+						</a>
+					</div>
+				</div>
+			</div>
+		{% else %}
+			<p class="text-muted">Aucun refuge disponible pour le moment.</p>
 		{% endfor %}
 	</div>
 {% endblock %}

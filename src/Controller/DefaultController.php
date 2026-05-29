@@ -14,11 +14,12 @@ use Symfony\Component\Routing\Attribute\Route;
 final class DefaultController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(AnimalRepository $animalRepository): Response
+    public function index(AnimalRepository $animalRepository,  ShelterRepository $shelterRepository): Response
     {
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
             'animals' => $animalRepository->findAvailable(),
+            'shelters' => $shelterRepository->findAll(),
         ]);
     }
 

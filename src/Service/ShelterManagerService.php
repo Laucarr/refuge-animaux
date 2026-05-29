@@ -32,19 +32,6 @@ class ShelterManagerService implements ShelterManagerInterface
             ->toArray();
     }
 
-    public function getAdoptionsByUser(User $user): array
-    {
-        $adoptions = [];
-        foreach ($user->getShelters() as $shelter) {
-            foreach ($shelter->getAnimals() as $animal) {
-                foreach ($animal->getAdoptions() as $adoption) {
-                    $adoptions[] = $adoption;
-                }
-            }
-        }
-        return $adoptions;
-    }
-
     public function getCaretakersByUser(User $user): array
     {
         $caretakers = [];

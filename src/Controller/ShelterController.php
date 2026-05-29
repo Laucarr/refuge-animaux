@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Shelter;
+use App\Form\ManageShelterOwnersType;
 use App\Form\ShelterType;
 use App\Repository\ShelterRepository;
 use App\Security\Voter\ShelterVoter;
@@ -86,5 +87,32 @@ final class ShelterController extends AbstractController
         }
 
         return $this->redirectToRoute('app_shelter_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/manage-owners', name: 'app_shelter_manage_owners', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted(ShelterVoter::EDIT, subject: 'shelter')]
+    public function manageOwners(Request $request, Shelter $shelter, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(ManageShelterOwnersType::class, $shelter, [
+            'current_user' => $this->getUser(),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if (!$shelter->getOwners()->contains($this->getUser())) {
+                $shelter->addOwner($this->getUser());
+            }
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_shelter_show', ['id' => $shelter->getId()]);
+        }
+
+        return $this->render('shelter/manage_shelterOwners.html.twig', [
+            'shelter' => $shelter,
+            'form'    => $form,
+        ]);
     }
 }

@@ -57,6 +57,11 @@
 				<div class="card-footer d-flex justify-content-between align-items-center">
 					<a href="{{ path('app_shelter_index') }}" class="btn btn-outline-secondary">← Retour à la liste</a>
 					<div class="d-flex gap-2">
+						{% if is_granted('ROLE_ADMIN') and is_granted('SHELTER_EDIT', shelter) %}
+							<a href="{{ path('app_shelter_manage_owners', {'id': shelter.id}) }}" class="btn btn-outline-secondary">
+								Gérer les gestionnaires
+							</a>
+						{% endif %}
 						{% if is_granted('SHELTER_EDIT', shelter) %}
 							<a href="{{ path('app_shelter_edit', {'id': shelter.id}) }}" class="btn btn-warning">Modifier</a>
 						{% endif %}

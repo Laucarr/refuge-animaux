@@ -43,6 +43,10 @@ public function findByFilters(
         int $shelterId = 0,
         array $shelterIds = []
     ): array {
+
+        if (empty($shelterIds)) {
+            return [];
+        }
         $qb = $this->createQueryBuilder('a');
 
         // Restreindre aux shelters de l'user

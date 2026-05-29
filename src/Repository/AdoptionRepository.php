@@ -18,6 +18,9 @@ class AdoptionRepository extends ServiceEntityRepository
 
     public function findByFilters(string $status = '', int $adopterId = 0, int $animalId = 0, int $shelterId = 0, array $shelterIds = []): array
     {
+        if (empty($shelterIds)) {
+            return [];
+        }
         $qb = $this->createQueryBuilder('a')
         ->join('a.animal', 'an');
         

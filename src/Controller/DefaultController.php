@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Interface\ShelterManagerInterface;
 use App\Repository\AnimalRepository;
 use App\Repository\ShelterRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,6 +14,10 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class DefaultController extends AbstractController
 {
+    public function __construct(private ShelterManagerInterface $shelterManager) 
+    {
+    }
+
     #[Route('/', name: 'app_home')]
     public function index(AnimalRepository $animalRepository,  ShelterRepository $shelterRepository): Response
     {
@@ -70,5 +75,18 @@ final class DefaultController extends AbstractController
             'animalId'  => $animal  ? $animal->getId()  : 0,
             'subject'   => $defaultSubject,
         ]);
+    }
+
+    #[Route('/no-shelter', name: 'app_no_shelter')]
+    public function noShelter(): Response
+    {
+        $user = $this->getUser();
+
+        // Si connecté et a déjà un shelter → rediriger
+        if ($user && !empty($this->shelterManager->getUserShelters($user))) {
+            return $this->redirectToRoute('app_animal_index');
+        }
+
+        return $this->render('default/no_shelter.html.twig');
     }
 }

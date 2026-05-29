@@ -61,17 +61,19 @@ class CaretakerType extends AbstractType
                 'widget'   => 'single_text',
                 'required' => false,
             ])
-            ->add('animals', EntityType::class, [
-                'class' => Animal::class,
-                'choice_label' => 'name',
-                'multiple' => true,
-                'required' => false
-            ])
             ->add('shelter', EntityType::class, [
                 'class' => Shelter::class,
                 'choice_label' => 'name',
                 'multiple' => true,
                 'required' => false,
+                'choices'      => $options['shelters'],
+            ])
+            ->add('animals', EntityType::class, [
+                'class' => Animal::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'required' => false,
+                'choices'      => $options['animals'],
             ])
         ;
     }
@@ -80,6 +82,8 @@ class CaretakerType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Caretaker::class,
+            'shelters'   => [],
+            'animals'    => [],
         ]);
     }
 }

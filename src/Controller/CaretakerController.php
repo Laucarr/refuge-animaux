@@ -37,7 +37,10 @@ final class CaretakerController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $caretaker = new Caretaker();
-        $form = $this->createForm(CaretakerType::class, $caretaker);
+        $form = $this->createForm(CaretakerType::class, $caretaker, [
+            'shelters' => $this->shelterManager->getUserShelters($this->getUser()),
+            'animals'  => $this->shelterManager->getAnimalsByUser($this->getUser()),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -66,7 +69,10 @@ final class CaretakerController extends AbstractController
     #[IsGranted(CaretakerVoter::EDIT, subject: 'caretaker')]
     public function edit(Request $request, Caretaker $caretaker, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(CaretakerType::class, $caretaker);
+        $form = $this->createForm(CaretakerType::class, $caretaker, [
+            'shelters' => $this->shelterManager->getUserShelters($this->getUser()),
+            'animals'  => $this->shelterManager->getAnimalsByUser($this->getUser()),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

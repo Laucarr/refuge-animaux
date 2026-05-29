@@ -7,6 +7,17 @@ use App\Interface\ShelterManagerInterface;
 
 class ShelterManagerService implements ShelterManagerInterface
 {
+    public function getAnimalsByUser(User $user): array
+    {
+        $animals = [];
+        foreach ($user->getShelters() as $shelter) {
+            foreach ($shelter->getAnimals() as $animal) {
+                $animals[] = $animal;
+            }
+        }
+        return $animals;
+    }
+
     public function getAvailableAnimalsByUser(User $user): array
     {
         $animals = [];

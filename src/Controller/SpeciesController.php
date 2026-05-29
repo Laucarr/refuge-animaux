@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/species')]
 final class SpeciesController extends AbstractController
@@ -23,6 +24,7 @@ final class SpeciesController extends AbstractController
     }
 
     #[Route('/new', name: 'app_species_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $species = new Species();
@@ -51,6 +53,7 @@ final class SpeciesController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_species_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Species $species, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(SpeciesType::class, $species);
@@ -69,6 +72,7 @@ final class SpeciesController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_species_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Species $species, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$species->getId(), $request->getPayload()->getString('_token'))) {

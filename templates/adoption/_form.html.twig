@@ -1,6 +1,54 @@
 {{ form_start(form) }}
-{{ form_widget(form) }}
+{{ form_row(form.date) }}
+{{ form_row(form.status) }}
+{{ form_row(form.notes) }}
+{{ form_row(form.animal) }}
+
+{# Sélection adoptant existant #}
+{{ form_row(form.adopter) }}
+
+{# Formulaire nouvel adoptant #}
+{% if form.newAdopter is defined %}
+	<div class="mt-3">
+		<button type="button" class="btn btn-outline-secondary btn-sm" id="toggle-new-adopter">
+			+ Créer un nouvel adoptant
+		</button>
+	</div>
+
+	<div id="new-adopter-form" class="card mt-3 p-3 bg-light" style="display:none">
+		<h6 class="mb-3">Nouvel adoptant</h6>
+		{{ form_row(form.newAdopter.firstName) }}
+		{{ form_row(form.newAdopter.lastName) }}
+		{{ form_row(form.newAdopter.email) }}
+		{{ form_row(form.newAdopter.phone) }}
+		{{ form_row(form.newAdopter.address) }}
+	</div>
+{% endif %}
+
 <div class="d-grid mt-3">
 	<button class="btn btn-primary">{{ button_label|default('Sauvegarder') }}</button>
 </div>
 {{ form_end(form) }}
+
+<script>
+	document.addEventListener('turbo:load', function () {
+const toggle = document.getElementById('toggle-new-adopter');
+const newAdopterForm = document.getElementById('new-adopter-form');
+const adopterSelect = document.querySelector('#adoption_adopter');
+
+if (! toggle) 
+return;
+
+
+toggle.addEventListener('click', function () {
+const isVisible = newAdopterForm.style.display !== 'none';
+newAdopterForm.style.display = isVisible ? 'none' : 'block';
+toggle.textContent = isVisible ? '+ Créer un nouvel adoptant' : '− Annuler';
+
+// Vider le select adoptant si on crée un nouveau
+if (! isVisible) {
+adopterSelect.value = '';
+}
+});
+});
+</script>

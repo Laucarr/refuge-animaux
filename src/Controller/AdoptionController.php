@@ -40,6 +40,14 @@ final class AdoptionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($adoption->getAdopter() === null) {
+                $newAdopter = $form->get('newAdopter')->getData();
+                if ($newAdopter->getFirstName()) {
+                    $entityManager->persist($newAdopter);
+                    $adoption->setAdopter($newAdopter);
+                }
+            }
+
             $entityManager->persist($adoption);
             $entityManager->flush();
 
@@ -71,6 +79,13 @@ final class AdoptionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $newAdopter = $form->get('newAdopter')->getData();
+
+            if ($newAdopter->getFirstName()) {
+                $entityManager->persist($newAdopter);
+                $adoption->setAdopter($newAdopter);
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_adoption_index', [], Response::HTTP_SEE_OTHER);

@@ -49,9 +49,15 @@ class AdoptionType extends AbstractType
                 'required' => true,
             ])
             ->add('adopter', EntityType::class, [
-                'class' => Adopter::class,
-                'choice_label' => 'lastName',
-                'required' => true,
+                'class'        => Adopter::class,
+                'choice_label' => fn(Adopter $adopter) => $adopter->getFirstName() . ' ' . $adopter->getLastName(),
+                'required'     => false,
+                'placeholder'  => 'Sélectionnez un adoptant existant',
+            ])
+            ->add('newAdopter', AdopterType::class, [
+                'mapped'   => false,
+                'required' => false,
+                'label'    => false,
             ])
         ;
     }

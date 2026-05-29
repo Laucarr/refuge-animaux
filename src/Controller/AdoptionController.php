@@ -81,7 +81,7 @@ final class AdoptionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $newAdopter = $form->get('newAdopter')->getData();
 
-            if ($newAdopter->getFirstName()) {
+            if ($newAdopter !== null && $newAdopter->getFirstName()) {
                 $entityManager->persist($newAdopter);
                 $adoption->setAdopter($newAdopter);
             }

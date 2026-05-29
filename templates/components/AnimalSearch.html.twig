@@ -73,8 +73,12 @@
 									{% endfor %}
 								</td>
 								<td class="text-nowrap">
-									<a href="{{ path('app_animal_show', {'id': animal.id}) }}" class="btn btn-sm btn-outline-primary">Voir</a>
-									<a href="{{ path('app_animal_edit', {'id': animal.id}) }}" class="btn btn-sm btn-outline-warning">Modifier</a>
+									{% if is_granted('ANIMAL_VIEW', animal) %}
+										<a href="{{ path('app_animal_show', {'id': animal.id}) }}" class="btn btn-sm btn-outline-primary">Voir</a>
+									{% endif %}
+									{% if is_granted('ANIMAL_EDIT', animal) %}
+										<a href="{{ path('app_animal_edit', {'id': animal.id}) }}" class="btn btn-sm btn-outline-warning">Modifier</a>
+									{% endif %}
 								</td>
 							</tr>
 						{% else %}

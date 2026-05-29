@@ -14,11 +14,14 @@ final class AnimalVoter extends Voter
     public const EDIT = 'ANIMAL_EDIT';
     public const VIEW = 'ANIMAL_VIEW';
     public const DELETE = 'ANIMAL_DELETE';
+    public const CREATE = 'ANIMAL_CREATE';
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        // replace with your own logic
-        // https://symfony.com/doc/current/security/voters.html
+        if ($attribute === self::CREATE) {
+            return true;
+        }
+
         return in_array($attribute, [self::EDIT, self::VIEW, self::DELETE])
             && $subject instanceof \App\Entity\Animal;
     }
@@ -36,6 +39,10 @@ final class AnimalVoter extends Voter
 
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
+            case self::CREATE:
+                return $this->hasAnyShelter($user);
+                break;
+
             case self::EDIT:
                 return $this->isOwner($subject, $user);
                 break;
@@ -55,5 +62,10 @@ final class AnimalVoter extends Voter
     private function isOwner(Animal $animal, User $user): bool
     {
         return $animal->getShelter()->getOwners()->contains($user);
+    }
+
+    private function hasAnyShelter(User $user): bool
+    {
+        return !$user->getShelters()->isEmpty();
     }
 }

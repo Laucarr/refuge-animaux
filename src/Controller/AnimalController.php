@@ -30,6 +30,7 @@ final class AnimalController extends AbstractController
     }
 
     #[Route('/new', name: 'app_animal_new', methods: ['GET', 'POST'])]
+    #[IsGranted(AnimalVoter::CREATE)]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $animal = new Animal();

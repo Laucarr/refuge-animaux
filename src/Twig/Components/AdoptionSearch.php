@@ -52,7 +52,7 @@ class AdoptionSearch
 
     public function getAdopters(): array
     {
-        return $this->adopterRepository->findAll();
+        return $this->adopterRepository->findByUserShelters($this->userShelterIds);
     }
 
     public function getShelters(): array

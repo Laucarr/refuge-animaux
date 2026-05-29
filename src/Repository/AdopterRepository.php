@@ -16,6 +16,18 @@ class AdopterRepository extends ServiceEntityRepository
         parent::__construct($registry, Adopter::class);
     }
 
+    public function findByUserShelters(array $shelterIds): array
+    {
+        return $this->createQueryBuilder('a')
+            ->join('a.adoptions', 'ad')
+            ->join('ad.animal', 'an')
+            ->where('an.shelter IN (:shelterIds)')
+            ->setParameter('shelterIds', $shelterIds)
+            ->distinct()
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Adopter[] Returns an array of Adopter objects
 //     */

@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\Adopter;
 use App\Entity\Adoption;
 use App\Entity\Animal;
-use App\Repository\AnimalRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -16,9 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AdoptionType extends AbstractType
 {
-    public function __construct(private AnimalRepository $animalRepository)
-    {
-    }
     
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

@@ -6,7 +6,6 @@ use App\Entity\Caretaker;
 use App\Entity\Shelter;
 use App\Form\CaretakerType;
 use App\Interface\ShelterManagerInterface;
-use App\Repository\CaretakerRepository;
 use App\Security\Voter\CaretakerVoter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +25,7 @@ final class CaretakerController extends AbstractController
 
 
     #[Route(name: 'app_caretaker_index', methods: ['GET'])]
-    public function index(CaretakerRepository $caretakerRepository): Response
+    public function index(): Response
     {
         return $this->render('caretaker/index.html.twig', [
             'caretakers' => $this->shelterManager->getCaretakersByUser($this->getUser()),

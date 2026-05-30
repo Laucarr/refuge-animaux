@@ -9,6 +9,7 @@ use Doctrine\ORM\Events;
 
 #[AsEntityListener(event: Events::prePersist, entity: Adoption::class)]
 #[AsEntityListener(event: Events::preFlush, entity: Adoption::class)]
+#[AsEntityListener(event: Events::preRemove, entity: Adoption::class)]
 class AdoptionListener
 {
     
@@ -39,6 +40,14 @@ class AdoptionListener
                 $adoption->getAnimal()
             );
         }
+    }
+
+    public function preRemove(Adoption $adoption): void
+    {
+        $animal = $adoption->getAnimal();
+        if ($animal === null) return;
+        
+        $animal->setStatus('disponible');
     }
 
     private function updateAnimalStatus(Adoption $adoption): void

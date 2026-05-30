@@ -51,7 +51,11 @@
 							<tr>
 								<td>{{ animal.name }}</td>
 								<td>{{ animal.age }}</td>
-								<td>{{ animal.species.name }}</td>
+								<td>
+									<a href="{{ path('app_species_show', {'id': animal.species.id}) }}">
+										{{ animal.species.name }}
+									</a>
+								</td>
 								<td>
 									<span class="badge bg-secondary">{{ animal.status }}</span>
 								</td>

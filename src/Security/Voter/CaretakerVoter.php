@@ -40,19 +40,11 @@ final class CaretakerVoter extends Voter
         switch ($attribute) {
             case self::CREATE:
                 return $this->hasAnyShelter($user);
-                break;
 
             case self::EDIT:
-                return $this->isOwnerOfShelter($subject, $user);
-                break;
-
             case self::VIEW:
-                return $this->isOwnerOfShelter($subject, $user);
-                break;
-
             case self::DELETE:
                 return $this->isOwnerOfShelter($subject, $user);
-                break;
         }
 
         return false;

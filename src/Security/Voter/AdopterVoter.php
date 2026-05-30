@@ -16,8 +16,6 @@ final class AdopterVoter extends Voter
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        // replace with your own logic
-        // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, [self::EDIT, self::VIEW])
             && $subject instanceof \App\Entity\Adopter;
     }
@@ -36,13 +34,8 @@ final class AdopterVoter extends Voter
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case self::EDIT:
-                return $this->isLinkedToUserShelter($subject, $user);
-                break;
-
             case self::VIEW:
                 return $this->isLinkedToUserShelter($subject, $user);
-                break;
-
         }
 
         return false;

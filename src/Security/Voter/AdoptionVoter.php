@@ -41,18 +41,13 @@ final class AdoptionVoter extends Voter
         switch ($attribute) {
             case self::CREATE:
                 return $this->hasAnyShelter($user);
-                break;
-            case self::EDIT:
-                return $this->isOwnerOfAnimalShelter($subject, $user);
-                break;
 
+            case self::EDIT:
             case self::VIEW:
                 return $this->isOwnerOfAnimalShelter($subject, $user);
-                break;
 
             case self::DELETE:
                 return $this->isAdmin($user) && $this->isOwnerOfAnimalShelter($subject, $user);
-                break;
         }
 
         return false;

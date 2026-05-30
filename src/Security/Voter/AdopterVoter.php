@@ -13,13 +13,12 @@ final class AdopterVoter extends Voter
 {
     public const VIEW   = 'ADOPTER_VIEW';
     public const EDIT   = 'ADOPTER_EDIT';
-    public const DELETE = 'ADOPTER_DELETE';
 
     protected function supports(string $attribute, mixed $subject): bool
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, [self::EDIT, self::VIEW, self::DELETE])
+        return in_array($attribute, [self::EDIT, self::VIEW])
             && $subject instanceof \App\Entity\Adopter;
     }
 
@@ -44,9 +43,6 @@ final class AdopterVoter extends Voter
                 return $this->isLinkedToUserShelter($subject, $user);
                 break;
 
-            case self::DELETE:
-                return $this->isLinkedToUserShelter($subject, $user);
-                break;
         }
 
         return false;

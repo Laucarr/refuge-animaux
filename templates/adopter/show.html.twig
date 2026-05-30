@@ -37,9 +37,6 @@
 						{% if is_granted('ADOPTER_EDIT', adopter) %}
 							<a href="{{ path('app_adopter_edit', {'id': adopter.id}) }}" class="btn btn-warning">Modifier</a>
 						{% endif %}
-						{% if is_granted('ADOPTER_DELETE', adopter) %}
-							{{ include('adopter/_delete_form.html.twig') }}
-						{% endif %}
 					</div>
 				</div>
 			</div>

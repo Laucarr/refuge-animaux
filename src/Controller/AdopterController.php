@@ -57,16 +57,4 @@ final class AdopterController extends AbstractController
             'form' => $form,
         ]);
     }
-
-    #[Route('/{id}', name: 'app_adopter_delete', methods: ['POST'])]
-    #[IsGranted(AdopterVoter::DELETE, subject: 'adopter')]
-    public function delete(Request $request, Adopter $adopter, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$adopter->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($adopter);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_adopter_index', [], Response::HTTP_SEE_OTHER);
-    }
 }

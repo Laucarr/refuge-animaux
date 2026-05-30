@@ -85,3 +85,62 @@ L'administrateur a accès à tout ce que fait un gestionnaire, plus des actions 
 | Attribuer des gestionnaires à un refuge | ❌ | ❌ | ✅ |
 | Gérer les espèces | ❌ | ❌ | ✅ |
 
+## Installation
+
+### Prérequis
+- PHP 8.4+
+- Composer
+- MySQL
+- Symfony CLI
+
+### Étapes
+
+1. **Cloner le projet**
+```bash
+git clone <url-du-repo>
+cd refuge_animaux
+```
+
+2. **Installer les dépendances**
+```bash
+composer install
+```
+
+3. **Configurer l'environnement**
+```bash
+cp .env .env.local
+```
+Modifiez `.env.local` avec vos paramètres :
+```env
+DATABASE_URL="mysql://user:password@127.0.0.1:3306/refuge_animaux"
+MAILER_DSN=smtp://user:password@sandbox.smtp.mailtrap.io:2525
+DEFAULT_CONTACT_EMAIL=contact@refuge.fr
+```
+
+4. **Créer la base de données**
+```bash
+php bin/console doctrine:database:create
+php bin/console doctrine:migrations:migrate
+```
+
+5. **Charger les données de test**
+```bash
+php bin/console doctrine:fixtures:load
+```
+
+6. **Lancer le serveur**
+```bash
+symfony server:start
+```
+
+### Comptes de test
+
+> ⚠️ Ces comptes sont uniquement disponibles après avoir chargé les fixtures (`doctrine:fixtures:load`). Ne pas utiliser en production.
+
+| Email | Mot de passe | Rôle | Shelters |
+|---|---|---|---|
+| admin@example.com | 1234 | ROLE_ADMIN | Refuge du Lac, SPA de Lyon, Les Griffes et Pattes |
+| test@example.com | 1234 | ROLE_USER | Refuge du Lac |
+| demo@example.com | 1234 | ROLE_USER | Les Griffes et Pattes, Refuge Arc-en-Ciel |
+| example@example.com | 1234 | ROLE_USER | Aucun |
+

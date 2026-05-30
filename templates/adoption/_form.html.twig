@@ -36,16 +36,17 @@ const toggle = document.getElementById('toggle-new-adopter');
 const newAdopterForm = document.getElementById('new-adopter-form');
 const adopterSelect = document.querySelector('#adoption_adopter');
 
-if (! toggle) 
+if (! toggle || toggle.dataset.initialized) 
 return;
 
+
+toggle.dataset.initialized = 'true';
 
 toggle.addEventListener('click', function () {
 const isVisible = newAdopterForm.style.display !== 'none';
 newAdopterForm.style.display = isVisible ? 'none' : 'block';
 toggle.textContent = isVisible ? '+ Créer un nouvel adoptant' : '− Annuler';
 
-// Vider le select adoptant si on crée un nouveau
 if (! isVisible) {
 adopterSelect.value = '';
 }

@@ -40,6 +40,7 @@ if (! toggle || toggle.dataset.initialized)
 return;
 
 
+
 toggle.dataset.initialized = 'true';
 
 toggle.addEventListener('click', function () {
@@ -49,6 +50,14 @@ toggle.textContent = isVisible ? '+ Créer un nouvel adoptant' : '− Annuler';
 
 if (! isVisible) {
 adopterSelect.value = '';
+}
+});
+
+// Fermer le formulaire nouvel adoptant si on sélectionne un existant
+adopterSelect.addEventListener('change', function () {
+if (this.value !== '') {
+newAdopterForm.style.display = 'none';
+toggle.textContent = '+ Créer un nouvel adoptant';
 }
 });
 });

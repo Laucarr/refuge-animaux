@@ -36,6 +36,7 @@ final class AdoptionController extends AbstractController
         $adoption = new Adoption();
         $form = $this->createForm(AdoptionType::class, $adoption, [
             'animals' => $this->shelterManager->getAvailableAnimalsByUser($this->getUser()),
+            'adopters' => $this->shelterManager->getAdoptersByUser($this->getUser()),
         ]);
         $form->handleRequest($request);
 
@@ -75,6 +76,7 @@ final class AdoptionController extends AbstractController
     {
         $form = $this->createForm(AdoptionType::class, $adoption, [
             'animals' => $this->shelterManager->getAvailableAnimalsByUser($this->getUser(), $adoption->getAnimal()),
+            'adopters' => $this->shelterManager->getAdoptersByUser($this->getUser()),
         ]);
         $form->handleRequest($request);
 

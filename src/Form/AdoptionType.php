@@ -49,6 +49,7 @@ class AdoptionType extends AbstractType
                 'choice_label' => fn(Adopter $adopter) => $adopter->getFirstName() . ' ' . $adopter->getLastName(),
                 'required'     => false,
                 'placeholder'  => 'Sélectionnez un adoptant existant',
+                'choices'      => $options['adopters'],
             ])
             ->add('newAdopter', AdopterType::class, [
                 'mapped'   => false,
@@ -63,6 +64,7 @@ class AdoptionType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Adoption::class,
             'animals'    => [],
+            'adopters'   => [],
         ]);
     }
 }

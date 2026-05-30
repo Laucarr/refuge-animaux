@@ -8,10 +8,6 @@
 		<div class="col-md-8">
 			<h1 class="mb-4">Contactez-nous</h1>
 
-			{% for message in app.flashes('success') %}
-				<div class="alert alert-success">{{ message }}</div>
-			{% endfor %}
-
 			{{ component('ContactForm', {
                 'shelterId': shelterId ?? 0,
                 'animalId':  animalId ?? 0,

@@ -47,6 +47,8 @@ final class CaretakerController extends AbstractController
             $entityManager->persist($caretaker);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Soignant créé avec succès !');
+
             return $this->redirectToRoute('app_caretaker_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -78,6 +80,8 @@ final class CaretakerController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('success', 'Soignant modifié avec succès !');
+
             return $this->redirectToRoute('app_caretaker_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -108,6 +112,8 @@ final class CaretakerController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$caretaker->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($caretaker);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Soignant supprimé avec succès !');
         }
 
         return $this->redirectToRoute('app_caretaker_index', [], Response::HTTP_SEE_OTHER);

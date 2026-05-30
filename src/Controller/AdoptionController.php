@@ -52,6 +52,8 @@ final class AdoptionController extends AbstractController
             $entityManager->persist($adoption);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Adoption créée avec succès !');
+
             return $this->redirectToRoute('app_adoption_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -90,6 +92,8 @@ final class AdoptionController extends AbstractController
 
             $entityManager->flush();
 
+            $this->addFlash('success', 'Adoption modifiée avec succès !');
+
             return $this->redirectToRoute('app_adoption_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -107,6 +111,8 @@ final class AdoptionController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$adoption->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($adoption);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Adoption supprimée avec succès !');
         }
 
         return $this->redirectToRoute('app_adoption_index', [], Response::HTTP_SEE_OTHER);

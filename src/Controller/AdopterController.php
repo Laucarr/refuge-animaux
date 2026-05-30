@@ -49,6 +49,8 @@ final class AdopterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('success', 'Adoptant modifié avec succès !');
+
             return $this->redirectToRoute('app_adopter_index', [], Response::HTTP_SEE_OTHER);
         }
 

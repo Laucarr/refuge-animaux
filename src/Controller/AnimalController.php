@@ -43,6 +43,8 @@ final class AnimalController extends AbstractController
             $entityManager->persist($animal);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Animal créé avec succès !');
+
             return $this->redirectToRoute('app_animal_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -72,6 +74,9 @@ final class AnimalController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+
+            $this->addFlash('success', 'Animal modifié avec succès !');
+
             return $this->redirectToRoute('app_animal_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -88,6 +93,8 @@ final class AnimalController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$animal->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($animal);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Animal supprimé avec succès !');
         }
 
         return $this->redirectToRoute('app_animal_index', [], Response::HTTP_SEE_OTHER);

@@ -39,6 +39,8 @@ final class ShelterController extends AbstractController
             $entityManager->persist($shelter);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Refuge créé avec succès !');
+
             return $this->redirectToRoute('app_shelter_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -67,6 +69,8 @@ final class ShelterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('success', 'Refuge modifié avec succès !');
+
             return $this->redirectToRoute('app_shelter_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -81,9 +85,21 @@ final class ShelterController extends AbstractController
     #[IsGranted(ShelterVoter::DELETE, subject: 'shelter')]
     public function delete(Request $request, Shelter $shelter, EntityManagerInterface $entityManager): Response
     {
+        if (!$shelter->getAnimals()->isEmpty()) {
+            $this->addFlash('error', 'Impossible de supprimer un refuge ayant des animaux.');
+            return $this->redirectToRoute('app_shelter_show', ['id' => $shelter->getId()]);
+        }
+
+        if (!$shelter->getCaretakers()->isEmpty()) {
+            $this->addFlash('error', 'Impossible de supprimer un refuge ayant des soignants.');
+            return $this->redirectToRoute('app_shelter_show', ['id' => $shelter->getId()]);
+        }
+
         if ($this->isCsrfTokenValid('delete'.$shelter->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($shelter);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Refuge supprimé avec succès !');
         }
 
         return $this->redirectToRoute('app_shelter_index', [], Response::HTTP_SEE_OTHER);
@@ -106,6 +122,8 @@ final class ShelterController extends AbstractController
             }
 
             $entityManager->flush();
+
+            $this->addFlash('success', 'Gestionnaires mis à jour avec succès !');
 
             return $this->redirectToRoute('app_shelter_show', ['id' => $shelter->getId()]);
         }

@@ -35,6 +35,8 @@ final class SpeciesController extends AbstractController
             $entityManager->persist($species);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Espèce créée avec succès !');
+
             return $this->redirectToRoute('app_species_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -62,6 +64,8 @@ final class SpeciesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('success', 'Espèce modifiée avec succès !');
+
             return $this->redirectToRoute('app_species_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -75,9 +79,16 @@ final class SpeciesController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Species $species, EntityManagerInterface $entityManager): Response
     {
+        if (!$species->getAnimals()->isEmpty()) {
+            $this->addFlash('error', 'Impossible de supprimer une espèce ayant des animaux.');
+            return $this->redirectToRoute('app_species_show', ['id' => $species->getId()]);
+        }
+
         if ($this->isCsrfTokenValid('delete'.$species->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($species);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Espèce supprimée avec succès !');
         }
 
         return $this->redirectToRoute('app_species_index', [], Response::HTTP_SEE_OTHER);

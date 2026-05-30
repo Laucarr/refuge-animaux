@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Animal;
 use App\Entity\User;
 use App\Interface\ShelterManagerInterface;
 
@@ -18,12 +19,12 @@ class ShelterManagerService implements ShelterManagerInterface
         return $animals;
     }
 
-    public function getAvailableAnimalsByUser(User $user): array
+    public function getAvailableAnimalsByUser(User $user, ?Animal $currentAnimal = null): array
     {
         $animals = [];
         foreach ($user->getShelters() as $shelter) {
             foreach ($shelter->getAnimals() as $animal) {
-                if ($animal->getStatus() === 'disponible') {
+                if ($animal->getStatus() === 'disponible' || $animal === $currentAnimal) {
                     $animals[] = $animal;
                 }
             }

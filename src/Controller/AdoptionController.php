@@ -74,7 +74,7 @@ final class AdoptionController extends AbstractController
     public function edit(Request $request, Adoption $adoption, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(AdoptionType::class, $adoption, [
-            'animals' => $this->shelterManager->getAvailableAnimalsByUser($this->getUser()),
+            'animals' => $this->shelterManager->getAvailableAnimalsByUser($this->getUser(), $adoption->getAnimal()),
         ]);
         $form->handleRequest($request);
 
